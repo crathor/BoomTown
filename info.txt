@@ -1,0 +1,13 @@
+Client//
+
+npm run start --prefix Client
+
+Server//
+
+npm run start:dev --prefix Server
+
+
+login - mutation.
+
+mutations change server state.
+querys return data.
