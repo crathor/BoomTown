@@ -18,11 +18,8 @@ import Typography from '@material-ui/core/Typography'
 import styles from './styles'
 
 class AccountForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      formToggle: true
-    }
+  state = {
+    formToggle: true
   }
 
   render() {
@@ -103,9 +100,9 @@ class AccountForm extends Component {
                 type="button"
                 onClick={() => {
                   // @TODO: Reset the form on submit
-                  this.setState({
-                    formToggle: !this.state.formToggle
-                  })
+                  this.setState(prevState => ({
+                    formToggle: !prevState.formToggle
+                  }))
                 }}
               >
                 {this.state.formToggle

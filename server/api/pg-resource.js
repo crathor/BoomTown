@@ -96,50 +96,61 @@ module.exports = function(postgres) {
       // -------------------------------
     },
     async getItems(idToOmit) {
-      const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *
-         *  Get all Items. If the idToOmit parameter has a value,
-         *  the query should only return Items were the ownerid column
-         *  does not contain the 'idToOmit'
-         *
-         *  Hint: You'll need to use a conditional AND and WHERE clause
-         *  to your query text using string interpolation
-         */
+      let text = `SELECT * FROM items`
+      if (idToOmit) {
+        text = `SELECT * FROM items
+        WHERE ownerid <> $1 AND borrowerid <> $1
+        OR ownerid <> $1 AND borrowerid IS NULL`
+      }
 
-        text: `SELECT * FROM items ${idToOmit ? 'WHERE ownerid != $1' : ''}`,
+      const query = {
+        text: text,
         values: idToOmit ? [idToOmit] : []
-      })
-      return items.rows
+      }
+      try {
+        const items = await postgres.query(query)
+        return items.rows
+      } catch (error) {
+        throw 'No Items Found'
+      }
     },
     async getItemsForUser(id) {
-      const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
-        text: `SELECT * FROM items WHERE ownerid = $1`,
-        values: [id]
-      })
-      return items.rows
+      try {
+        const items = await postgres.query({
+          /**
+           *  @TODO: Advanced queries
+           *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
+           */
+          text: `SELECT * FROM items WHERE ownerid = $1`,
+          values: [id]
+        })
+        return items.rows
+      } catch (error) {
+        throw 'No Items Found'
+      }
     },
     async getBorrowedItemsForUser(id) {
-      const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
-        text: ``,
-        values: [id]
-      })
-      return items.rows
+      try {
+        const items = await postgres.query({
+          /**
+           *  @TODO: Advanced queries
+           *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
+           */
+          text: `SELECT * FROM items WHERE borrowerid = $1`,
+          values: [id]
+        })
+        return items.rows
+      } catch (error) {
+        throw 'No Borrowed Items'
+      }
     },
     async getTags() {
-      const tags = await postgres.query(
-        'SELECT * FROM tags' /* @TODO: Basic queries */
-      )
-      return tags.rows
+      try {
+        const tags = await postgres.query('SELECT * FROM tags')
+        return tags.rows
+      } catch (error) {
+        throw "Couldn't retireve tags"
+      }
     },
     async getTagsForItem(id) {
       const tagsQuery = {
@@ -147,12 +158,15 @@ module.exports = function(postgres) {
         FROM itemtags item
         INNER JOIN tags t
         ON t.id = item.tagid
-        WHERE itemid = $1`, // @TODO: Advanced queries
+        WHERE itemid = $1`,
         values: [id]
       }
-
-      const tags = await postgres.query(tagsQuery)
-      return tags.rows
+      try {
+        const tags = await postgres.query(tagsQuery)
+        return tags.rows
+      } catch (error) {
+        throw 'No Tags on Item'
+      }
     },
     async saveNewItem({ item, image, user }) {
       /**

@@ -52,9 +52,9 @@ module.exports = function(app) {
           throw new ApolloError(e)
         }
       },
-      async items(parent, { id }, { pgResource }, info) {
+      async items(parent, { filter }, { pgResource }, info) {
         try {
-          const items = await pgResource.getItems()
+          const items = await pgResource.getItems(filter)
           return items
         } catch (e) {
           throw new ApolloError(e)
@@ -83,15 +83,23 @@ module.exports = function(app) {
        *
        */
       // @TODO: Uncomment these lines after you define the User type with these fields
-      items(parent, args, { pgResource }, info) {
-        const items = pgResource.getItemsForUser(parent.id)
-        return items
+      async items(parent, args, { pgResource }, info) {
+        try {
+          const items = await pgResource.getItemsForUser(parent.id)
+          return items
+        } catch (e) {
+          throw new ApolloError(e)
+        }
+      },
+      async borrowed(parent, args, { pgResource }, info) {
+        try {
+          const items = pgResource.getBorrowedItemsForUser(parent.id)
+          return items
+        } catch (e) {
+          throw new ApolloError(e)
+        }
+        // -------------------------------
       }
-      // borrowed(parent, args, { pgResource }, info) {
-
-      //   return []
-      //   // -------------------------------
-      // }
     },
 
     Item: {
@@ -106,9 +114,13 @@ module.exports = function(app) {
        *
        */
       // @TODO: Uncomment these lines after you define the Item type with these fields
-      itemowner(item, args, { pgResource }, info) {
-        const owner = pgResource.getUserById(item.ownerid)
-        return owner
+      async itemowner(item, args, { pgResource }, info) {
+        try {
+          const owner = pgResource.getUserById(item.ownerid)
+          return owner
+        } catch (e) {
+          throw new ApolloError(e)
+        }
         // return {
         //   id: 2,
         //   fullname: 'Mock user',
@@ -117,19 +129,30 @@ module.exports = function(app) {
         // }
         // // -------------------------------
       },
-      tags(item, args, { pgResource }, info) {
-        const tags = pgResource.getTagsForItem(item.id)
-        return tags
+      async tags(item, args, { pgResource }, info) {
+        try {
+          const tags = pgResource.getTagsForItem(item.id)
+          return tags
+        } catch (e) {
+          throw new ApolloError(e)
+        }
         // -------------------------------
+      },
+      async borrower(item, args, { pgResource }, info) {
+        try {
+          if (item.borrowerid) {
+            const items = pgResource.getUserById(item.borrowerid)
+            return items
+          }
+          return null
+        } catch (e) {
+          throw new ApolloError(e)
+        }
+        /**
+         * @TODO: Replace this mock return statement with the correct user from Postgres
+         * or null in the case where the item has not been borrowed.
+         */
       }
-      // async borrower() {
-      //   /**
-      //    * @TODO: Replace this mock return statement with the correct user from Postgres
-      //    * or null in the case where the item has not been borrowed.
-      //    */
-      //   return null
-      //   // -------------------------------
-      // },
       // async imageurl({ imageurl, imageid, mimetype, data }) {
       //   if (imageurl) return imageurl
       //   if (imageid) {
