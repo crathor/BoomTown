@@ -99,8 +99,7 @@ module.exports = function(postgres) {
       let text = `SELECT * FROM items`
       if (idToOmit) {
         text = `SELECT * FROM items
-        WHERE ownerid <> $1 AND borrowerid <> $1
-        OR ownerid <> $1 AND borrowerid IS NULL`
+        WHERE ownerid <> $1 AND borrowerid IS NULL`
       }
 
       const query = {

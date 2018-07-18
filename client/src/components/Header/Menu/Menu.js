@@ -1,11 +1,17 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import IconButton from '@material-ui/core/IconButton'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
+import {
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  withStyles
+} from '@material-ui/core'
+import { Fingerprint, PowerSettingsNew, MoreVert } from '@material-ui/icons'
 import { Link } from 'react-router-dom'
 
-class DropMenu extends React.Component {
+import styles from './styles'
+class DropMenu extends Component {
   state = {
     anchorEl: null
   }
@@ -29,7 +35,7 @@ class DropMenu extends React.Component {
           onClick={this.handleClick}
           color="inherit"
         >
-          <MoreVertIcon />
+          <MoreVert />
         </IconButton>
         <Menu
           id="simple-menu"
@@ -37,14 +43,24 @@ class DropMenu extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
+          <Link to="/profile/1" style={{ outline: 'none' }}>
+            <MenuItem onClick={this.handleClose}>
+              <ListItemIcon>
+                <Fingerprint />
+              </ListItemIcon>
+              <ListItemText inset primary="Profile" />
+            </MenuItem>
+          </Link>
           <MenuItem onClick={this.handleClose}>
-            <Link to="/profile">Profile</Link>
+            <ListItemIcon>
+              <PowerSettingsNew />
+            </ListItemIcon>
+            <ListItemText inset primary="Sign Out" />
           </MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
         </Menu>
       </div>
     )
   }
 }
 
-export default DropMenu
+export default withStyles(styles)(DropMenu)

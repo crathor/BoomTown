@@ -1,0 +1,68 @@
+import React from 'react'
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardActions,
+  Avatar,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grow
+} from '@material-ui/core'
+import { withStyles } from '@material-ui/core/styles'
+import moment from 'moment'
+
+import styles from './styles'
+import tempPhoto from '../../images/Rmj1.jpeg'
+
+const ItemCard = ({
+  id,
+  imageurl,
+  description,
+  tags,
+  title,
+  created,
+  itemowner,
+  classes
+}) => {
+  const itemTags = tags.map(tag => `${tag.title}`)
+  const itemCreatedTime = new Date(created)
+  return (
+    <Card raised style={{ height: '' }}>
+      <CardMedia
+        className={classes.media}
+        src={tempPhoto}
+        title="Contemplative Reptile"
+      />
+      <CardHeader
+        avatar={
+          <Avatar aria-label="Recipe" className={classes.avatar}>
+            R
+          </Avatar>
+        }
+        title={itemowner.fullname}
+        subheader={moment(itemCreatedTime).fromNow()}
+      />
+      <CardContent className={classes.content}>
+        <Typography gutterBottom variant="headline" component="h2">
+          {title}
+        </Typography>
+        <Typography component="p">{itemTags.join(', ')}</Typography>
+        <Typography component="p">{description}</Typography>
+      </CardContent>
+      <CardActions>
+        <Button
+          variant="outlined"
+          size="large"
+          color="default"
+          className={classes.button}
+        >
+          Borrow
+        </Button>
+      </CardActions>
+    </Card>
+  )
+}
+
+export default withStyles(styles)(ItemCard)

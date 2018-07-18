@@ -11,11 +11,11 @@ export default () => (
     {/* @TODO: Add your menu component here */}
     <Header />
     <Switch>
-      <Route path="/welcome" component={Home} />
-      <Route path="/items" component={Items} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/profile/:userid" component={Profile} />
-      <Route path="/share" component={Share} />
+      <Route exact path="/welcome" component={Home} />
+      <Route exact path="/items" component={Items} />
+      <Route exact path="/profile" component={Profile} />
+      <Route exact path="/profile/:userid" component={Profile} />
+      <Route exact path="/share" component={Share} />
       <Redirect to="/items" />
       {/**
        * @TODO: Define routes here for: /items, /profile, /profile/:userid, and /share

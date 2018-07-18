@@ -1,5 +1,7 @@
 import { withStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
 import React from 'react'
+import { updateTitle } from '../../redux/actions'
 
 import styles from './styles'
 
@@ -13,4 +15,7 @@ const Share = ({ classes }) => {
   )
 }
 
-export default withStyles(styles)(Share)
+export default connect(
+  null,
+  { updateTitle }
+)(withStyles(styles)(Share))

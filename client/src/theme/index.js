@@ -7,6 +7,9 @@ export default createMuiTheme({
     },
     secondary: {
       main: '#212121'
+    },
+    avatar: {
+      backgroundColor: 'red'
     }
   }
 })
