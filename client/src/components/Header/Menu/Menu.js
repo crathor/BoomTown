@@ -8,7 +8,7 @@ import {
   withStyles
 } from '@material-ui/core'
 import { Fingerprint, PowerSettingsNew, MoreVert } from '@material-ui/icons'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import styles from './styles'
 class DropMenu extends Component {
@@ -23,10 +23,13 @@ class DropMenu extends Component {
   handleClose = () => {
     this.setState({ anchorEl: null })
   }
+  handleRouteChange = () => {
+    this.handleClose()
+    this.props.history.push('/profile/1')
+  }
 
   render() {
     const { anchorEl } = this.state
-
     return (
       <div>
         <IconButton
@@ -43,14 +46,12 @@ class DropMenu extends Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <Link to="/profile/1" style={{ outline: 'none' }}>
-            <MenuItem onClick={this.handleClose}>
-              <ListItemIcon>
-                <Fingerprint />
-              </ListItemIcon>
-              <ListItemText inset primary="Profile" />
-            </MenuItem>
-          </Link>
+          <MenuItem onClick={this.handleRouteChange}>
+            <ListItemIcon>
+              <Fingerprint />
+            </ListItemIcon>
+            <ListItemText inset primary="Profile" />
+          </MenuItem>
           <MenuItem onClick={this.handleClose}>
             <ListItemIcon>
               <PowerSettingsNew />
@@ -63,4 +64,4 @@ class DropMenu extends Component {
   }
 }
 
-export default withStyles(styles)(DropMenu)
+export default withRouter(withStyles(styles)(DropMenu))

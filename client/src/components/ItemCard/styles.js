@@ -9,6 +9,10 @@ const styles = theme => ({
   },
   button: {
     margin: '15px 0'
+  },
+  content: {
+    height: 120,
+    justifyContent: 'center'
   }
 })
 

@@ -29,7 +29,7 @@ const ItemCard = ({
   const itemTags = tags.map(tag => `${tag.title}`)
   const itemCreatedTime = new Date(created)
   return (
-    <Card raised style={{ height: '' }}>
+    <Card raised style={{ margin: 12 }}>
       <CardMedia
         className={classes.media}
         src={tempPhoto}

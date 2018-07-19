@@ -1,26 +1,24 @@
-import { withStyles } from '@material-ui/core/styles'
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import { Grid, withStyles } from '@material-ui/core/'
 import ItemCard from '../../components/ItemCard'
 import ItemContainer from '../../containers/ItemsContainer'
 
 import styles from './styles'
 
 const Items = ({ classes }) => (
-  <ItemContainer filter={1}>
+  <ItemContainer filter={4}>
     {({ itemsData: { loading, error, items } }) => {
       if (loading) return '...loading'
       if (error) return `Error: ${error.message}`
       return (
         <Grid
           container
-          spacing={24}
-          alignItems="flex-end"
+          direction="row"
           justify="center"
-          className={classes.itemsGrid}
+          className={classes.root}
         >
           {items.map(item => (
-            <Grid key={item.id} item xs={12} sm={6} md={4}>
+            <Grid key={item.id} item xs={12} sm={12} md={6} lg={4}>
               <ItemCard {...item} />
             </Grid>
           ))}
