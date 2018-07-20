@@ -12,6 +12,7 @@ import {
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import moment from 'moment'
+import Gravatar from 'react-gravatar'
 
 import styles from './styles'
 import tempPhoto from '../../images/Rmj1.jpeg'
@@ -24,12 +25,13 @@ const ItemCard = ({
   title,
   created,
   itemowner,
-  classes
+  classes,
+  style
 }) => {
   const itemTags = tags.map(tag => `${tag.title}`)
   const itemCreatedTime = new Date(created)
   return (
-    <Card raised style={{ margin: 12 }}>
+    <Card raised className={classes.card} style={style}>
       <CardMedia
         className={classes.media}
         src={tempPhoto}
@@ -37,9 +39,7 @@ const ItemCard = ({
       />
       <CardHeader
         avatar={
-          <Avatar aria-label="Recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <Gravatar email={itemowner.email} style={{ borderRadius: '50%' }} />
         }
         title={itemowner.fullname}
         subheader={moment(itemCreatedTime).fromNow()}

@@ -4,7 +4,12 @@ import styles from './styles'
 
 const MainGrid = ({ classes, children }) => {
   return (
-    <Grid container direction="row" justify="center" className={classes.root}>
+    <Grid
+      container
+      direction="row"
+      justify="flex-start"
+      className={classes.root}
+    >
       {children}
     </Grid>
   )

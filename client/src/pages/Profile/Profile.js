@@ -11,6 +11,7 @@ import {
 import ItemsContainer from '../../containers/ItemsContainer'
 import ItemCard from '../../components/ItemCard'
 import MainGrid from '../../components/MainGrid'
+import Gravatar from 'react-gravatar'
 
 import styles from './styles'
 
@@ -20,9 +21,10 @@ const Profile = ({ classes, match }) => (
       <Card raised style={{ margin: 12 }}>
         <CardHeader
           avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
-            </Avatar>
+            <Gravatar
+              email={'codyrathor@gmail.com'}
+              style={{ borderRadius: '50%' }}
+            />
           }
           title={'crathor'}
         />

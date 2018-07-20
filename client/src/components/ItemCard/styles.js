@@ -4,14 +4,16 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
     background: theme.palette.primary.main
   },
-  avatar: {
-    backgroundColor: 'red'
+  card: {
+    margin: 12,
+    [theme.breakpoints.up('md')]: {
+      minHeight: 520
+    }
   },
   button: {
     margin: '15px 0'
   },
   content: {
-    height: 120,
     justifyContent: 'center'
   }
 })
