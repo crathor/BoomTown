@@ -4,11 +4,9 @@ import {
   Card,
   CardHeader,
   CardActions,
-  Avatar,
   CardContent,
   CardMedia,
-  Typography,
-  Grow
+  Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import moment from 'moment'

@@ -4,9 +4,7 @@ import {
   withStyles,
   Card,
   CardHeader,
-  CardContent,
-  Avatar,
-  Typography
+  CardContent
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
 import ItemCard from '../../components/ItemCard'

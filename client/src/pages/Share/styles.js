@@ -5,21 +5,8 @@ const styles = theme => ({
     boxSizing: 'border-box',
     padding: theme.spacing.unit * 5,
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing.unit * 18,
-      paddingTop: 80
+      padding: theme.spacing.unit * 20
     }
-  },
-  headline: {
-    fontWeight: 700,
-    color: theme.palette.text.primary,
-    fontSize: theme.typography.display4.fontSize,
-    [theme.breakpoints.up('md')]: {
-      fontSize: theme.typography.display2.fontSize
-    }
-  },
-  subheading: {
-    fontWeight: 400,
-    color: 'white'
   }
 })
 
