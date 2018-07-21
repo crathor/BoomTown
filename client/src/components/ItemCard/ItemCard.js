@@ -27,6 +27,7 @@ const ItemCard = ({
   style
 }) => {
   const itemTags = tags.map(tag => `${tag.title}`)
+  console.log(tags.length)
   const itemCreatedTime = new Date(created)
   return (
     <Card raised className={classes.card} style={style}>

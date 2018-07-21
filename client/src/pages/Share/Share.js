@@ -1,13 +1,11 @@
 import { withStyles, Grid } from '@material-ui/core'
-import { connect } from 'react-redux'
 import React from 'react'
-import { updateTitle } from '../../redux/actions'
-
+import { connect } from 'react-redux'
 import styles from './styles'
 import ShareForm from '../../components/ShareItemForm'
 import ItemCard from '../../components/ItemCard'
 
-const Share = ({ classes }) => {
+const Share = ({ classes, item }) => {
   return (
     <Grid
       container
@@ -19,7 +17,10 @@ const Share = ({ classes }) => {
         <ItemCard
           style={{ width: '420px' }}
           id={0}
-          tags={[]}
+          tags={item.tags}
+          title={item.title}
+          description={item.description}
+          created={new Date()}
           itemowner={{ email: 'codyrathor@gmail.com' }}
         />
       </Grid>
@@ -30,7 +31,9 @@ const Share = ({ classes }) => {
   )
 }
 
-export default connect(
-  null,
-  { updateTitle }
-)(withStyles(styles)(Share))
+const mapStateToProps = state => {
+  return {
+    item: state.item
+  }
+}
+export default connect(mapStateToProps)(withStyles(styles)(Share))

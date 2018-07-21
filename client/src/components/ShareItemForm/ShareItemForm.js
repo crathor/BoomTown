@@ -7,6 +7,7 @@ import {
   Grid
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
+import FormStateToRedux from './FormStateToRedux'
 import CheckBoxItem from './CheckBoxItem'
 import { Form, Field } from 'react-final-form'
 import styles from './styles'
@@ -17,7 +18,19 @@ class ShareForm extends Component {
   handleSubmit = values => {
     console.log(values)
   }
-  validate = values => {}
+  validate = values => {
+    let errors = {}
+    if (!values.name) {
+      errors.name = 'Required'
+    }
+    if (!values.description) {
+      errors.description = 'Required'
+    }
+    if (!values.tags) {
+      errors.tags = 'Required'
+    }
+    return errors
+  }
   render() {
     const { classes } = this.props
     return (
@@ -26,12 +39,13 @@ class ShareForm extends Component {
         validate={this.validate}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
+            <FormStateToRedux />
             <Typography variant="display4" className={classes.headline}>
               Share. Borrow. Prosper.
             </Typography>
             <Button>Upload an Image</Button>
             <div>
-              <Field name="name">
+              <Field name="title">
                 {({ input, meta }) => (
                   <TextField
                     {...input}

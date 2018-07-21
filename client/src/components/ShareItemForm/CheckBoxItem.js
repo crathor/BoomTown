@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Checkbox } from '@material-ui/core'
+import { Grid, Checkbox, InputLabel } from '@material-ui/core'
 import { Field } from 'react-final-form'
 import {
   Home,
@@ -56,9 +56,12 @@ const CheckBoxItem = ({ id, title }) => {
   }
   return (
     <Grid item xs={1}>
-      <Field name={title} type="checkbox" value={title}>
+      <Field name="tags" type="checkbox" value={title}>
         {({ input, meta }) => (
-          <Checkbox icon={icon} checkedIcon={selected} {...input} />
+          <InputLabel>
+            <Checkbox icon={icon} checkedIcon={selected} {...input} />
+            {title}
+          </InputLabel>
         )}
       </Field>
     </Grid>
