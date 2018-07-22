@@ -12,28 +12,11 @@ import FormStateToRedux from './FormStateToRedux'
 import CheckBoxItem from './CheckBoxItem'
 import { Form, Field } from 'react-final-form'
 import styles from './styles'
+import { validate } from './helpers/validation'
 
 class ShareForm extends Component {
-  state = {}
-
   handleSubmit = values => {
     console.log(values)
-  }
-  validate = values => {
-    let errors = {}
-    // if (!values.imageurl) {
-    //   errors.imageurl = 'Required'
-    // }
-    if (!values.title) {
-      errors.title = 'Required'
-    }
-    if (!values.description) {
-      errors.description = 'Required'
-    }
-    if (!values.tags) {
-      errors.tags = 'Required'
-    }
-    return errors
   }
   maxCharLength = (charLimit, value) => {
     if (value.length > charLimit) {
@@ -46,7 +29,7 @@ class ShareForm extends Component {
     return (
       <Form
         onSubmit={this.handleSubmit}
-        validate={this.validate}
+        validate={validate}
         render={({ handleSubmit, reset, submitting, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
             <FormStateToRedux />
