@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Checkbox, InputLabel } from '@material-ui/core'
+import { Grid, Checkbox, InputLabel, withStyles } from '@material-ui/core'
 import { Field } from 'react-final-form'
 import {
   Home,
@@ -11,42 +11,45 @@ import {
   Audiotrack,
   GolfCourse
 } from '@material-ui/icons'
+import styles from './styles'
 
-const CheckBoxItem = ({ id, title }) => {
+const CheckBoxItem = ({ tag, classes }) => {
   let icon
   let selected
-  switch (title) {
+  switch (tag.title) {
     case 'Household items':
-      icon = <Home />
-      selected = <Home color="primary" />
+      icon = <Home className={classes.checkboxIcon} />
+      selected = <Home color="primary" className={classes.checkboxIcon} />
       break
     case 'Tools':
-      icon = <Build />
-      selected = <Build color="primary" />
+      icon = <Build className={classes.checkboxIcon} />
+      selected = <Build color="primary" className={classes.checkboxIcon} />
       break
     case 'Electronics':
-      icon = <Power />
-      selected = <Power color="primary" />
+      icon = <Power className={classes.checkboxIcon} />
+      selected = <Power color="primary" className={classes.checkboxIcon} />
       break
     case 'Sporting Goods':
-      icon = <FitnessCenter />
-      selected = <FitnessCenter color="primary" />
+      icon = <FitnessCenter className={classes.checkboxIcon} />
+      selected = (
+        <FitnessCenter color="primary" className={classes.checkboxIcon} />
+      )
       break
     case 'Musical Instruments':
-      icon = <Audiotrack />
-      selected = <Audiotrack color="primary" />
+      icon = <Audiotrack className={classes.checkboxIcon} />
+      selected = <Audiotrack color="primary" className={classes.checkboxIcon} />
       break
     case 'Recreational Equipment':
-      icon = <GolfCourse />
-      selected = <GolfCourse color="primary" />
+      icon = <GolfCourse className={classes.checkboxIcon} />
+      selected = <GolfCourse color="primary" className={classes.checkboxIcon} />
       break
     case 'Random':
-      icon = <Casino />
-      selected = <Casino color="primary" />
+      icon = <Casino className={classes.checkboxIcon} />
+      selected = <Casino color="primary" className={classes.checkboxIcon} />
       break
     case 'Physical Media':
-      icon = <SdCard />
-      selected = <SdCard color="primary" />
+      icon = <SdCard className={classes.checkboxIcon} />
+      selected = <SdCard color="primary" className={classes.checkboxIcon} />
       break
 
     default:
@@ -55,12 +58,12 @@ const CheckBoxItem = ({ id, title }) => {
       break
   }
   return (
-    <Grid item xs={1}>
-      <Field name="tags" type="checkbox" value={title}>
+    <Grid item xs={3}>
+      <Field name="tags" type="checkbox" value={JSON.stringify(tag)}>
         {({ input, meta }) => (
-          <InputLabel>
+          <InputLabel shrink className={classes.label}>
             <Checkbox icon={icon} checkedIcon={selected} {...input} />
-            {title}
+            {tag.title}
           </InputLabel>
         )}
       </Field>
@@ -68,4 +71,4 @@ const CheckBoxItem = ({ id, title }) => {
   )
 }
 
-export default CheckBoxItem
+export default withStyles(styles)(CheckBoxItem)

@@ -21,7 +21,7 @@ const Share = ({ classes, item }) => {
           title={item.title}
           description={item.description}
           created={new Date()}
-          itemowner={{ email: 'codyrathor@gmail.com' }}
+          itemowner={{ email: 'codyrathor@gmail.com', fullname: 'crathor' }}
         />
       </Grid>
       <Grid item xs={6}>

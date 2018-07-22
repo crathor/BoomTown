@@ -10,7 +10,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_FORM:
-      console.log(action.payload)
       const { title, description, tags, imageurl } = action.payload
       return {
         ...state,

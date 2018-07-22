@@ -4,7 +4,8 @@ import {
   Typography,
   withStyles,
   Button,
-  Grid
+  Grid,
+  Input
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
 import FormStateToRedux from './FormStateToRedux'
@@ -20,8 +21,11 @@ class ShareForm extends Component {
   }
   validate = values => {
     let errors = {}
-    if (!values.name) {
-      errors.name = 'Required'
+    // if (!values.imageurl) {
+    //   errors.imageurl = 'Required'
+    // }
+    if (!values.title) {
+      errors.title = 'Required'
     }
     if (!values.description) {
       errors.description = 'Required'
@@ -31,24 +35,45 @@ class ShareForm extends Component {
     }
     return errors
   }
+  maxCharLength = (charLimit, value) => {
+    if (value.length > charLimit) {
+      return value.slice(0, value.length - 1)
+    }
+    return value
+  }
   render() {
     const { classes } = this.props
     return (
       <Form
         onSubmit={this.handleSubmit}
         validate={this.validate}
-        render={({ handleSubmit, reset, submitting, pristine, values }) => (
+        render={({ handleSubmit, reset, submitting, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
             <FormStateToRedux />
             <Typography variant="display4" className={classes.headline}>
               Share. Borrow. Prosper.
             </Typography>
-            <Button>Upload an Image</Button>
+            <Field name="imageurl">
+              {(input, meta) => (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                  className={classes.uploadButton}
+                >
+                  Upload an Image
+                </Button>
+              )}
+            </Field>
             <div>
               <Field name="title">
                 {({ input, meta }) => (
                   <TextField
                     {...input}
+                    onChange={e => {
+                      const value = this.maxCharLength(55, e.target.value)
+                      input.onChange(value)
+                    }}
                     label="name your item"
                     autoComplete="off"
                   />
@@ -60,6 +85,10 @@ class ShareForm extends Component {
                 {({ input, meta }) => (
                   <TextField
                     {...input}
+                    onChange={e => {
+                      const value = this.maxCharLength(150, e.target.value)
+                      input.onChange(value)
+                    }}
                     label="description"
                     autoComplete="off"
                     multiline
@@ -75,25 +104,22 @@ class ShareForm extends Component {
                     if (loading) return '...loading'
                     if (error) return `Error: ${error.message}`
                     return tags.map(tag => (
-                      <CheckBoxItem key={tag.id} {...tag} />
+                      <CheckBoxItem key={tag.id} tag={tag} />
                     ))
                   }}
                 </ItemsContainer>
               </Grid>
             </div>
             <div className="buttons">
-              <button type="submit" disabled={submitting || pristine}>
-                Submit
-              </button>
-              <button
-                type="button"
-                onClick={reset}
-                disabled={submitting || pristine}
+              <Button
+                variant="contained"
+                disabled={submitting || pristine || invalid}
+                color="primary"
+                type="submit"
               >
-                Reset
-              </button>
+                Submit
+              </Button>
             </div>
-            <pre>{JSON.stringify(values, 0, 2)}</pre>
           </form>
         )}
       />
