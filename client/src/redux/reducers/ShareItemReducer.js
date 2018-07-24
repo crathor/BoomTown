@@ -2,7 +2,7 @@ import { UPDATE_FORM, RESET_FORM, RESET_IMAGE } from '../actions/types'
 
 const initialState = {
   imageurl:
-    'https://dummyimage.com/420X250/cccccc/212121.png&text=Select+an+image',
+    'https://dummyimage.com/370X200/cccccc/212121.png&text=Select+an+image',
   title: 'Name your item',
   description: 'Describe your item',
   itemowner: { email: 'codyrathor@gmail.com', fullname: 'crathor' },

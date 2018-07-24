@@ -15,7 +15,7 @@ import Gravatar from 'react-gravatar'
 import styles from './styles'
 
 const ItemCard = ({ item, classes }) => {
-  const itemTags = item.tags.map(tag => `${tag.title}`)
+  const itemTags = item.tags.map(tag => tag.title)
   const itemCreatedTime = new Date(item.created)
   return (
     <Card raised className={classes.card}>
