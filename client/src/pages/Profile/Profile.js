@@ -69,7 +69,7 @@ const Profile = ({ classes, match }) => (
         )
         const userItems = user.items.map(item => (
           <Grid key={item.id} item xs={4}>
-            <ItemCard {...item} />
+            <ItemCard item={item} />
           </Grid>
         ))
         return (

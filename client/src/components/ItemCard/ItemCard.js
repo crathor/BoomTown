@@ -13,44 +13,36 @@ import moment from 'moment'
 import Gravatar from 'react-gravatar'
 
 import styles from './styles'
-import tempPhoto from '../../images/Rmj1.jpeg'
 
-const ItemCard = ({
-  id,
-  imageurl,
-  description,
-  tags,
-  title,
-  created,
-  itemowner,
-  classes,
-  style
-}) => {
-  const itemTags = tags.map(tag => `${tag.title}`)
-  const itemCreatedTime = new Date(created)
+const ItemCard = ({ item, classes }) => {
+  const itemTags = item.tags.map(tag => `${tag.title}`)
+  const itemCreatedTime = new Date(item.created)
   return (
-    <Card raised className={classes.card} style={style}>
+    <Card raised className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={tempPhoto}
+        image={item.imageurl}
         title="Contemplative Reptile"
       />
       <CardHeader
         avatar={
-          <Gravatar email={itemowner.email} style={{ borderRadius: '50%' }} />
+          <Gravatar
+            email={item.itemowner.email}
+            style={{ borderRadius: '50%' }}
+          />
         }
-        title={itemowner.fullname}
+        title={item.itemowner.fullname}
         subheader={moment(itemCreatedTime).fromNow()}
       />
       <CardContent className={classes.content}>
         <Typography gutterBottom variant="headline" component="h2">
-          {title}
+          {item.title}
         </Typography>
         <Typography component="p" color="textSecondary">
           {itemTags.join(', ')}
         </Typography>
         <Typography component="p" variant="subheading" paragraph>
-          {description}
+          {item.description}
         </Typography>
       </CardContent>
       <CardActions className={classes.actions} disableActionSpacing>

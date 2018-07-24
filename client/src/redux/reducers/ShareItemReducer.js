@@ -1,22 +1,30 @@
-import { UPDATE_FORM } from '../actions/types'
+import { UPDATE_FORM, RESET_FORM, RESET_IMAGE } from '../actions/types'
 
 const initialState = {
-  imageurl: '',
+  imageurl:
+    'https://dummyimage.com/420X250/cccccc/212121.png&text=Select+an+image',
   title: 'Name your item',
   description: 'Describe your item',
+  itemowner: { email: 'codyrathor@gmail.com', fullname: 'crathor' },
+  created: new Date(),
   tags: []
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_FORM:
-      const { title, description, tags, imageurl } = action.payload
       return {
         ...state,
-        title: title || 'Name your item',
-        description: description || 'Describe your item',
-        tags: tags || [],
-        imageurl
+        ...action.payload
+      }
+    case RESET_IMAGE:
+      return {
+        ...state,
+        imageurl: initialState.imageurl
+      }
+    case RESET_FORM:
+      return {
+        ...initialState
       }
 
     default:

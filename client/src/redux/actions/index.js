@@ -1,4 +1,4 @@
-import { UPDATE_FORM } from './types'
+import { UPDATE_FORM, RESET_FORM, RESET_IMAGE } from './types'
 
 export const updateForm = state => {
   const tags = state.tags
@@ -14,5 +14,15 @@ export const updateForm = state => {
       title: state.title,
       description: state.description
     }
+  }
+}
+export const resetForm = () => {
+  return {
+    type: RESET_FORM
+  }
+}
+export const resetImage = () => {
+  return {
+    type: RESET_IMAGE
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styles from './styles'
 import ShareForm from '../../components/ShareItemForm'
-import ItemCard from '../../components/ItemCard'
+import ShareItemPreview from '../../components/ShareItemPreview'
 
 const Share = ({ classes, item }) => {
   return (
@@ -13,16 +13,8 @@ const Share = ({ classes, item }) => {
       justify="space-around"
       className={classes.root}
     >
-      <Grid item xs={6}>
-        <ItemCard
-          style={{ width: '420px' }}
-          id={0}
-          tags={item.tags}
-          title={item.title}
-          description={item.description}
-          created={new Date()}
-          itemowner={{ email: 'codyrathor@gmail.com', fullname: 'crathor' }}
-        />
+      <Grid item xs={4}>
+        <ShareItemPreview item={item} />
       </Grid>
       <Grid item xs={6}>
         <ShareForm />

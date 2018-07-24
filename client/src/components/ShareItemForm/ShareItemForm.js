@@ -29,7 +29,7 @@ class ShareForm extends Component {
       <Form
         onSubmit={this.handleSubmit}
         validate={validate}
-        render={({ handleSubmit, reset, submitting, pristine, invalid }) => (
+        render={({ handleSubmit, submitting, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
             <FormStateToRedux />
             <Typography variant="display4" className={classes.headline}>
