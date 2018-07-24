@@ -9,11 +9,23 @@ import {
 import ItemsContainer from '../../containers/ItemsContainer'
 import FormStateToRedux from './FormStateToRedux'
 import CheckBoxItem from './CheckBoxItem'
-import { Form, Field } from 'react-final-form'
+import { Form, Field, FormSpy } from 'react-final-form'
 import styles from './styles'
 import { validate } from './helpers/validation'
+import { connect } from 'react-redux'
+import { updateForm, resetImage, resetForm } from '../../redux/actions'
 
 class ShareForm extends Component {
+  state = {
+    fileSelected: false,
+    imageurl: '',
+    selectedTags: [],
+    submitted: false
+  }
+  componentWillUnmount = () => {
+    this.props.resetForm()
+  }
+
   handleSubmit = values => {
     console.log(values)
   }
@@ -23,15 +35,57 @@ class ShareForm extends Component {
     }
     return value
   }
+  getBase64Url() {
+    return new Promise(resolve => {
+      const reader = new FileReader()
+      reader.onload = e => {
+        resolve(
+          `data:${this.state.fileSelected.mimeType};base64, ${btoa(
+            e.target.result
+          )}`
+        )
+      }
+      reader.readAsBinaryString(this.state.fileSelected)
+    })
+  }
+  applyTags(tags) {
+    return (
+      tags &&
+      tags
+        .filter(t => this.state.selectedTags.indexOf(t.id) > -1)
+        .map(t => ({ title: t.title, id: t.id }))
+    )
+  }
+  dispatchUpdate(values, updateForm) {
+    if (!values.imageurl && this.state.fileSelected) {
+      this.getBase64Url().then(imageurl => {
+        updateForm({
+          imageurl
+        })
+      })
+    }
+
+    updateForm({
+      ...values
+    })
+  }
   render() {
-    const { classes } = this.props
+    const { classes, resetForm, resetImage, updateForm } = this.props
     return (
       <Form
         onSubmit={this.handleSubmit}
         validate={validate}
         render={({ handleSubmit, submitting, pristine, invalid }) => (
           <form onSubmit={handleSubmit} className={classes.form}>
-            <FormStateToRedux />
+            <FormSpy
+              subscription={{ values: true }}
+              component={({ values }) => {
+                if (values) {
+                  this.dispatchUpdate(values, updateForm)
+                }
+                return ''
+              }}
+            />
             <Typography variant="display4" className={classes.headline}>
               Share. Borrow. Prosper.
             </Typography>
@@ -109,4 +163,7 @@ class ShareForm extends Component {
   }
 }
 
-export default withStyles(styles)(ShareForm)
+export default connect(
+  undefined,
+  { updateForm, resetForm, resetImage }
+)(withStyles(styles)(ShareForm))

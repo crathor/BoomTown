@@ -6,12 +6,8 @@ import { updateForm } from '../../redux/actions'
 const FormStateToRedux = ({ updateForm }) => (
   <FormSpy
     subscription={{ values: true }}
-    component={({ values }) => {
-      console.log('VALUES:', values)
-      if (values) {
-        updateForm(values)
-      }
-      return ''
+    onChange={({ values }) => {
+      updateForm(values)
     }}
   />
 )
