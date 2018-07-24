@@ -13,7 +13,7 @@ import theme from './theme'
 import client from './apollo'
 import Routes from './routes/Layout'
 import store from './redux/'
-
+//import { ViewerProvider } from './context/ViewerProvider'
 /**
  * @TODO: Add the Viewer Context
  *

@@ -4,16 +4,26 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center'
   },
-  flex: {
-    flexGrow: 1
-  },
   homeButton: {
-    marginRight: 'auto'
+    width: 40
   },
   logo: {
-    maxWidth: '100%'
+    width: '100%'
   },
-  button: { boxShadow: 'none', border: 'none', marginRight: '10px' }
+  toolbar: {
+    margin: '0 20px'
+  },
+  button: {
+    marginLeft: 'auto',
+    marginRight: 16,
+    paddingRight: 16,
+    borderRadius: 200,
+    boxShadow: 'none',
+    border: 'none',
+    '&:hover': {
+      background: 'rgba(0,0,0,0.1)'
+    }
+  }
 })
 
 export default styles

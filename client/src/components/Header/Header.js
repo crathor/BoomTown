@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   withStyles,
   AppBar,
   Toolbar,
   IconButton,
-  Button
+  Button,
+  Slide
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/AddCircle'
 import { Link } from 'react-router-dom'
@@ -14,33 +15,49 @@ import BoomTownLogo from '../../images/boomtown.svg'
 
 import styles from './styles'
 
-const Header = props => {
-  const { classes } = props
-  return (
-    <AppBar position="sticky" className={classes.root}>
-      <Toolbar>
-        <IconButton
-          className={classes.homeButton}
-          color="inherit"
-          aria-label="Menu"
-          to="/items"
-          component={Link}
-        >
-          <img src={BoomTownLogo} alt="" className={classes.logo} />
-        </IconButton>
-        <Button
-          component={Link}
-          to="/share"
-          variant="extendedFab"
-          color="primary"
-          className={classes.button}
-        >
-          <AddIcon style={{ marginRight: '10px' }} /> Share Something
-        </Button>
-        <Menu />
-      </Toolbar>
-    </AppBar>
-  )
+class Header extends Component {
+  state = {
+    sharePageActive: false
+  }
+  hideShareButton = () => {
+    this.setState({ sharePageActive: true })
+  }
+  showShareButton = () => {
+    this.setState({ sharePageActive: false })
+  }
+  render() {
+    const { classes } = this.props
+    return (
+      <AppBar position="sticky" className={classes.root}>
+        <Toolbar disableGutters className={classes.toolbar}>
+          <IconButton
+            className={classes.homeButton}
+            color="inherit"
+            aria-label="Menu"
+            to="/items"
+            component={Link}
+            onClick={this.showShareButton}
+          >
+            <img src={BoomTownLogo} alt="BoomTown" className={classes.logo} />
+          </IconButton>
+          <Slide in={!this.state.sharePageActive} direction="left">
+            <Button
+              onClick={this.hideShareButton}
+              component={Link}
+              to="/share"
+              variant="extendedFab"
+              color="primary"
+              className={classes.button}
+            >
+              <AddIcon style={{ marginRight: 8 }} />
+              Share Something
+            </Button>
+          </Slide>
+          <Menu showShareButton={this.showShareButton} />
+        </Toolbar>
+      </AppBar>
+    )
+  }
 }
 
 Header.propTypes = {

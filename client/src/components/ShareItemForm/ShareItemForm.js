@@ -4,8 +4,7 @@ import {
   Typography,
   withStyles,
   Button,
-  Grid,
-  Input
+  Grid
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
 import FormStateToRedux from './FormStateToRedux'

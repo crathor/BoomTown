@@ -2,8 +2,8 @@ import { UPDATE_FORM } from '../actions/types'
 
 const initialState = {
   imageurl: '',
-  title: '',
-  description: '',
+  title: 'Name your item',
+  description: 'Describe your item',
   tags: []
 }
 
@@ -13,8 +13,8 @@ export default (state = initialState, action) => {
       const { title, description, tags, imageurl } = action.payload
       return {
         ...state,
-        title,
-        description,
+        title: title || 'Name your item',
+        description: description || 'Describe your item',
         tags: tags || [],
         imageurl
       }

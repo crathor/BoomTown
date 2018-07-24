@@ -5,16 +5,23 @@ const styles = theme => ({
     background: theme.palette.primary.main
   },
   card: {
-    margin: 12,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     [theme.breakpoints.up('md')]: {
-      minHeight: 520
+      maxHeight: 550
     }
   },
-  button: {
-    margin: '15px 0'
-  },
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center'
+  },
+  actions: {
+    marginTop: 'auto'
+  },
+  button: {
+    marginBottom: 10
   }
 })
 

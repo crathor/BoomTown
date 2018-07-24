@@ -21,9 +21,11 @@ class DropMenu extends Component {
   }
 
   handleClose = () => {
+    this.props.showShareButton()
     this.setState({ anchorEl: null })
   }
   handleRouteChange = () => {
+    this.props.showShareButton()
     this.handleClose()
     this.props.history.push('/profile/1')
   }

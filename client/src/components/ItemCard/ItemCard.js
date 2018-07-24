@@ -32,7 +32,7 @@ const ItemCard = ({
     <Card raised className={classes.card} style={style}>
       <CardMedia
         className={classes.media}
-        src={tempPhoto}
+        image={tempPhoto}
         title="Contemplative Reptile"
       />
       <CardHeader
@@ -46,10 +46,14 @@ const ItemCard = ({
         <Typography gutterBottom variant="headline" component="h2">
           {title}
         </Typography>
-        <Typography component="p">{itemTags.join(', ')}</Typography>
-        <Typography component="p">{description}</Typography>
+        <Typography component="p" color="textSecondary">
+          {itemTags.join(', ')}
+        </Typography>
+        <Typography component="p" variant="subheading" paragraph>
+          {description}
+        </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions className={classes.actions} disableActionSpacing>
         <Button
           variant="outlined"
           size="large"

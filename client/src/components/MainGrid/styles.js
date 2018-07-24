@@ -7,7 +7,7 @@ const styles = theme => ({
       padding: theme.spacing.unit * 8
     },
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing.unit * 8
+      padding: theme.spacing.unit * 10
     }
   }
 })

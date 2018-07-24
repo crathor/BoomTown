@@ -8,6 +8,8 @@ const MainGrid = ({ classes, children }) => {
       container
       direction="row"
       justify="flex-start"
+      alignItems="stretch"
+      spacing={24}
       className={classes.root}
     >
       {children}

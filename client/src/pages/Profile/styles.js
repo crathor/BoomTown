@@ -1,13 +1,14 @@
 const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    background: theme.palette.secondary.main,
-    padding: theme.spacing.unit * 5,
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing.unit * 20
-    }
+  content: {
+    paddingTop: 0
   },
-  avatar: theme.palette.avatar
+  header: {
+    paddingBottom: 0
+  },
+  profileHeader: {
+    padding: theme.spacing.unit * 6,
+    marginBottom: theme.spacing.unit * 6
+  }
 })
 
 export default styles
