@@ -23,6 +23,9 @@ const styles = theme => ({
   uploadButton: {
     marginTop: 20
   },
+  fileUpload: {
+    display: 'none'
+  },
   checkboxIcon: {
     fontSize: 35
   }

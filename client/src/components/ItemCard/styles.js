@@ -2,7 +2,7 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-    background: theme.palette.primary.main
+    backgroundImage: 'cover'
   },
   card: {
     display: 'flex',
@@ -22,6 +22,9 @@ const styles = theme => ({
   },
   button: {
     marginBottom: 10
+  },
+  hideButton: {
+    display: 'none'
   }
 })
 

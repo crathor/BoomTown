@@ -14,7 +14,7 @@ import Gravatar from 'react-gravatar'
 
 import styles from './styles'
 
-const ItemCard = ({ item, classes }) => {
+const ItemCard = ({ item, classes, hideButton }) => {
   const itemTags = item.tags.map(tag => tag.title)
   const itemCreatedTime = new Date(item.created)
   return (
@@ -50,7 +50,7 @@ const ItemCard = ({ item, classes }) => {
           variant="outlined"
           size="large"
           color="default"
-          className={classes.button}
+          className={hideButton ? classes.hideButton : classes.button}
         >
           Borrow
         </Button>

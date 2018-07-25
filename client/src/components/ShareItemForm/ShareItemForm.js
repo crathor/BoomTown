@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import {
   TextField,
   Typography,
   withStyles,
   Button,
-  Grid
+  Grid,
+  Input
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
 import CheckBoxItem from './CheckBoxItem'
@@ -15,15 +16,30 @@ import { connect } from 'react-redux'
 import { updateForm, resetImage, resetForm } from '../../redux/actions'
 
 class ShareForm extends Component {
-  state = {
-    fileSelected: false,
-    imageurl: '',
-    submitted: false
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      fileSelected: false,
+      imageurl: '',
+      submitted: false
+    }
+    this.fileRef = React.createRef()
   }
   componentWillUnmount = () => {
     this.props.resetForm()
   }
-
+  handleImageReset = () => {
+    this.setState({ fileSelected: false })
+    this.fileRef.current.value = ''
+    this.props.resetImage()
+  }
+  handleImageUploadSelect = () => {
+    this.fileRef.current.click()
+  }
+  handleImageSelect = event => {
+    this.setState({ fileSelected: event.target.files[0] })
+  }
   handleSubmit = values => {
     console.log(values)
   }
@@ -67,7 +83,8 @@ class ShareForm extends Component {
     })
   }
   render() {
-    const { classes, resetForm, resetImage, updateForm } = this.props
+    const { classes, updateForm } = this.props
+    const { fileSelected } = this.state
     return (
       <ItemsContainer>
         {({ tagData: { loading, error, tags } }) => {
@@ -77,7 +94,13 @@ class ShareForm extends Component {
             <Form
               onSubmit={this.handleSubmit}
               validate={validate}
-              render={({ handleSubmit, submitting, pristine, invalid }) => (
+              render={({
+                handleSubmit,
+                submitting,
+                pristine,
+                invalid,
+                values
+              }) => (
                 <form onSubmit={handleSubmit} className={classes.form}>
                   <FormSpy
                     subscription={{ values: true }}
@@ -93,14 +116,29 @@ class ShareForm extends Component {
                   </Typography>
                   <Field name="imageurl">
                     {(input, meta) => (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        className={classes.uploadButton}
-                      >
-                        Upload an Image
-                      </Button>
+                      <Fragment>
+                        <Button
+                          variant={fileSelected ? 'outlined' : 'contained'}
+                          color={fileSelected ? 'default' : 'primary'}
+                          fullWidth
+                          className={classes.uploadButton}
+                          onClick={
+                            fileSelected
+                              ? this.handleImageReset
+                              : this.handleImageUploadSelect
+                          }
+                        >
+                          {fileSelected ? 'Reset Image' : 'Select an Image'}
+                        </Button>
+                        <Input
+                          className={classes.fileUpload}
+                          type="file"
+                          inputRef={this.fileRef}
+                          onChange={event => {
+                            this.handleImageSelect(event)
+                          }}
+                        />
+                      </Fragment>
                     )}
                   </Field>
                   <div>
@@ -156,6 +194,7 @@ class ShareForm extends Component {
                       Submit
                     </Button>
                   </div>
+                  <pre>{JSON.stringify(values, 0, 2)}</pre>
                 </form>
               )}
             />
