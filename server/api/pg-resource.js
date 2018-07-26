@@ -21,7 +21,8 @@ module.exports = function(postgres) {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: '', // @TODO: Authentication - Server
+        text:
+          'INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3)', // @TODO: Authentication - Server
         values: [fullname, email, password]
       }
       try {
@@ -40,7 +41,7 @@ module.exports = function(postgres) {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: '', // @TODO: Authentication - Server
+        text: 'SELECT * FROM users WHERE email = $1 ', // @TODO: Authentication - Server
         values: [email]
       }
       try {
@@ -52,26 +53,6 @@ module.exports = function(postgres) {
       }
     },
     async getUserById(id) {
-      /**
-       *  @TODO: Handling Server Errors
-       *
-       *  Inside of our resuorce methods we get to determine wen and how errors are returned
-       *  to our resolvers using try / catch / throw semantics.
-       *
-       *  Ideally, the errors that we'll throw from our resource should be able to be used by the client
-       *  to display user feedback. This means we'll be catching errors and throwing new ones.
-       *
-       *  Errors thrown from our resource will be captured and returned from our resolvers.
-       *
-       *  This will be the basic logic for this resource method:
-       *  1) Query for the user using the given id. If no user is found throw an error.
-       *  2) If there is an error with the query (500) throw an error.
-       *  3) If the user is found and there are no errors, return only the id, email, fullname, bio fields.
-       *     -- this is important,don't return the password!
-       *
-       *  You'll need to complete the query first before attempting this exercise.
-       */
-
       const findUserQuery = {
         text: 'SELECT * FROM users WHERE id = $1', // @TODO: Basic queries
         values: [id]
@@ -84,16 +65,6 @@ module.exports = function(postgres) {
         // still need to figure out errors
         throw 'User was not found.'
       }
-
-      /**
-       *  Refactor the following code using the error handling logic described above.
-       *  When you're done here, ensure all of the resource methods in this file
-       *  include a try catch, and throw appropriate errors.
-       *
-       *  Here is an example throw statement: throw 'User was not found.'
-       *  Customize your throw statements so the message can be used by the client.
-       */
-      // -------------------------------
     },
     async getItems(idToOmit) {
       let text = `SELECT * FROM items`
@@ -116,10 +87,6 @@ module.exports = function(postgres) {
     async getItemsForUser(id) {
       try {
         const items = await postgres.query({
-          /**
-           *  @TODO: Advanced queries
-           *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-           */
           text: `SELECT * FROM items WHERE ownerid = $1`,
           values: [id]
         })
@@ -131,10 +98,6 @@ module.exports = function(postgres) {
     async getBorrowedItemsForUser(id) {
       try {
         const items = await postgres.query({
-          /**
-           *  @TODO: Advanced queries
-           *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-           */
           text: `SELECT * FROM items WHERE borrowerid = $1`,
           values: [id]
         })
