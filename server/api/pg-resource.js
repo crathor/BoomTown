@@ -67,10 +67,16 @@ module.exports = function(postgres) {
       }
     },
     async getItems(idToOmit) {
-      let text = `SELECT * FROM items`
+      let text = `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
+      FROM items item
+      INNER JOIN uploads up
+      ON up.itemid = item.id`
       if (idToOmit) {
-        text = `SELECT * FROM items
-        WHERE ownerid <> $1 AND borrowerid IS NULL`
+        text = `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
+        FROM items item
+        INNER JOIN uploads up
+        ON up.itemid = item.id
+        WHERE item.ownerid <> $1 AND item.borrowerid IS NULL`
       }
 
       const query = {
@@ -131,25 +137,6 @@ module.exports = function(postgres) {
       }
     },
     async saveNewItem({ item, image, user }) {
-      /**
-       *  @TODO: Adding a New Item
-       *
-       *  Adding a new Item to Posgtres is the most advanced query.
-       *  It requires 3 separate INSERT statements.
-       *
-       *  All of the INSERT statements must:
-       *  1) Proceed in a specific order.
-       *  2) Succeed for the new Item to be considered added
-       *  3) If any of the INSERT queries fail, any successful INSERT
-       *     queries should be 'rolled back' to avoid 'orphan' data in the database.
-       *
-       *  To achieve #3 we'll ue something called a Postgres Transaction!
-       *  The code for the transaction has been provided for you, along with
-       *  helpful comments to help you get started.
-       *
-       *  Read the method and the comments carefully before you begin.
-       */
-
       return new Promise((resolve, reject) => {
         /**
          * Begin transaction by opening a long-lived connection
@@ -162,7 +149,7 @@ module.exports = function(postgres) {
               // Convert image (file stream) to Base64
               const imageStream = image.stream.pipe(strs('base64'))
 
-              let base64Str = ''
+              let base64Str = 'data:image/*;base64, '
               imageStream.on('data', data => {
                 base64Str += data
               })
@@ -170,22 +157,14 @@ module.exports = function(postgres) {
               imageStream.on('end', async () => {
                 // Image has been converted, begin saving things
                 const { title, description, tags } = item
-
-                // Generate new Item query
-                // @TODO
-                // -------------------------------
                 const itemQuery = {
                   text:
                     'INSERT INTO items (title, description, ownerid) VALUES ($1, $2, $3) RETURNING *',
-                  values: [title, description, 1] // 1 will become user
+                  values: [title, description, 565] // 1 will become user
                 }
 
                 const newItem = await client.query(itemQuery)
                 const itemId = newItem.rows[0].id
-
-                // Insert new Item
-                // @TODO
-                // -------------------------------
 
                 const imageUploadQuery = {
                   text:
@@ -200,20 +179,8 @@ module.exports = function(postgres) {
                 }
 
                 // Upload image
-                const uploadedImage = await client.query(imageUploadQuery)
-                const imageid = uploadedImage.rows[0].id
+                await client.query(imageUploadQuery)
 
-                // Generate image relation query
-                // @TODO
-                // -------------------------------
-
-                // Insert image
-                // @TODO
-                // -------------------------------
-
-                // Generate tag relationships query (use the'tagsQueryString' helper function provided)
-                // @TODO
-                // -------------------------------
                 const tagsQuery = {
                   text: `INSERT INTO itemtags (tagid, itemid) VALUES ${tagsQueryString(
                     [...tags],
@@ -223,10 +190,6 @@ module.exports = function(postgres) {
                   values: tags.map(tag => tag.id)
                 }
                 await client.query(tagsQuery)
-
-                // Insert tags
-                // @TODO
-                // -------------------------------
 
                 // Commit the entire transaction!
                 client.query('COMMIT', err => {
