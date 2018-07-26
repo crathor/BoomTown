@@ -16,7 +16,7 @@ export default () => (
       <Route exact path="/profile" component={Profile} />
       <Route exact path="/profile/:userid" component={Profile} />
       <Route exact path="/share" component={Share} />
-      <Redirect to="/items" />
+      <Redirect to="/welcome" />
       {/**
        * @TODO: Define routes here for: /items, /profile, /profile/:userid, and /share
        *
