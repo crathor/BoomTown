@@ -116,11 +116,10 @@ export const LOGOUT_MUTATION = gql`
 
 export const SIGNUP_MUTATION = gql`
   mutation signup($user: SignupInput!) {
-    return
-    null
-    # @TODO: Pass the user into the signup mutation as an argument
-    # and return the id of the new user when the mutation is complete.
+    signup(user: $user)
   }
+  # @TODO: Pass the user into the signup mutation as an argument
+  # and return the id of the new user when the mutation is complete.
 `
 
 export const LOGIN_MUTATION = gql`

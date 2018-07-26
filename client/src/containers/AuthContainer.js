@@ -15,7 +15,12 @@ const signup = ({ render }) => {
   /**
    * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
    */
-  return undefined
+  return (
+    <Mutation mutation={SIGNUP_MUTATION}>
+      {/* this is an arbitrary render where you will pass your two arguments into a single one */}
+      {(signup, user) => render({ signup, user })}
+    </Mutation>
+  )
 }
 
 const login = ({ render }) => {
@@ -34,7 +39,7 @@ const logout = ({ render }) => {
 
 const AuthContainer = adopt({
   // @TODO: Uncomment each line as you write the corresponding query.
-  // signup,
+  signup
   // login,
   // logout
   // -------------------------------
