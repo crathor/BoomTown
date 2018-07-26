@@ -25,7 +25,9 @@ class AccountForm extends Component {
     formToggle: true
   }
   handleSubmit = values => {
-    console.log(values)
+    return {
+      ...values
+    }
   }
   validate = values => {
     let errors = {}
@@ -48,18 +50,28 @@ class AccountForm extends Component {
 
     return (
       <AuthContainer>
-        {({ signup: { signup, user } }) => (
+        {({ signup: { signup }, login: { login } }) => (
           <Form
-            onSubmit={() =>
-              signup({
-                variables: {
-                  user: {
-                    fullname: 'csdssddsdsfs',
-                    email: 'ssdfdffff',
-                    password: 'dssdffffdsfb'
+            onSubmit={
+              this.state.formToggle
+                ? () => {
+                    login({
+                      variables: {
+                        user: { email: 'cdog@gmail.com', password: 'password' }
+                      }
+                    })
                   }
-                }
-              })
+                : () => {
+                    signup({
+                      variables: {
+                        user: {
+                          fullname: 'cdog',
+                          email: 'cdog@gmail.com',
+                          password: 'password'
+                        }
+                      }
+                    })
+                  }
             }
             validate={this.validate}
             render={({ handleSubmit, invalid, submitting, form, pristine }) => (

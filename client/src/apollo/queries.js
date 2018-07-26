@@ -124,8 +124,7 @@ export const SIGNUP_MUTATION = gql`
 
 export const LOGIN_MUTATION = gql`
   mutation login($user: LoginInput!) {
-    return
-    null
+    login(user: $user)
     # @TODO: Pass the user into the login mutation as an argument
     # and return the id of the new user when the mutation is complete.
   }
