@@ -1,5 +1,5 @@
 import { adopt } from 'react-adopt'
-import { Query } from 'react-apollo'
+import { Query, Mutation } from 'react-apollo'
 import React from 'react'
 
 // @TODO: Uncommment this line when the ViewerProvider is added to the app.
@@ -9,14 +9,14 @@ import React from 'react'
 import {
   ALL_TAGS_QUERY,
   ALL_ITEMS_QUERY,
-  ALL_USER_ITEMS_QUERY
-  //ADD_ITEM_MUTATION
+  ALL_USER_ITEMS_QUERY,
+  ADD_ITEM_MUTATION
 } from '../apollo/queries'
 
 const itemsData = ({ filter, render }) => {
   return (
     <Query query={ALL_ITEMS_QUERY} variables={{ filter: filter || null }}>
-      {({ loading, error, data: { items } }) =>
+      {({ loading, error, data: { items } = {} }) =>
         render({ loading, error, items })
       }
     </Query>
@@ -35,7 +35,9 @@ const userItemsData = ({ id, render }) => {
   return (
     <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: id || 1 }}>
       {/* REFACTOR THIS ONCE AUTHENTICATION IS SET UP */}
-      {({ loading, error, data: { user } }) => render({ loading, error, user })}
+      {({ loading, error, data: { user } = {} }) =>
+        render({ loading, error, user })
+      }
     </Query>
   )
   /**
@@ -48,28 +50,36 @@ const userItemsData = ({ id, render }) => {
 
 const tagData = ({ render }) => (
   <Query query={ALL_TAGS_QUERY}>
-    {({ loading, error, data: { tags } }) => render({ loading, error, tags })}
+    {({ loading, error, data: { tags } = {} }) =>
+      render({ loading, error, tags })
+    }
   </Query>
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all the tags.
    */
 )
 
-// const addItem = ({ render }) => {
-//   /**
-//    * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
-//    *
-//    * Note: Be sure to use `refetchQueries` to refresh Apollo's cache with the
-//    * latest items for the user.
-//    */
-//   return undefined
-// }
+const addItem = ({ render }) => {
+  /**
+   * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
+   *
+   * Note: Be sure to use `refetchQueries` to refresh Apollo's cache with the
+   * latest items for the user.
+   */
+  return (
+    <Mutation mutation={ADD_ITEM_MUTATION}>
+      {(mutation, data, error, loading) =>
+        render({ mutation, data, error, loading })
+      }
+    </Mutation>
+  )
+}
 const ItemsContainer = adopt({
   // @TODO: Uncomment each line as you write the corresponding query.
   tagData,
   itemsData,
-  userItemsData
-  // addItem
+  userItemsData,
+  addItem
   // -------------------------------
 })
 

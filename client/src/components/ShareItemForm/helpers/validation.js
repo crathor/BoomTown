@@ -1,8 +1,5 @@
 export const validate = values => {
   const errors = {}
-  if (!values.imageurl) {
-    errors.imageurl = 'Required'
-  }
   if (!values.title) {
     errors.title = 'Required'
   }

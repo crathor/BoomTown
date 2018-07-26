@@ -64,7 +64,13 @@ class ShareForm extends Component {
   }
   getAndSortTags = tags => {
     if (tags) {
-      return tags.map(tag => JSON.parse(tag)).sort((a, b) => a.title > b.title)
+      return tags
+        .map(tag => {
+          tag = JSON.parse(tag)
+          delete tag.__typename
+          return tag
+        })
+        .sort((a, b) => a.title > b.title)
     }
     return []
   }
@@ -82,17 +88,40 @@ class ShareForm extends Component {
       tags
     })
   }
+  saveItem = async (values, addItem) => {
+    const {
+      validity,
+      files: [file]
+    } = this.fileRef.current
+    if (!validity.valid || !file) return
+    try {
+      const tags = this.getAndSortTags(values.tags)
+      const itemData = {
+        ...values,
+        tags
+      }
+      await addItem.mutation({
+        variables: {
+          item: itemData,
+          image: file
+        }
+      })
+      this.setState({ done: true })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   render() {
     const { classes, updateForm } = this.props
     const { fileSelected } = this.state
     return (
       <ItemsContainer>
-        {({ tagData: { loading, error, tags } }) => {
+        {({ addItem, tagData: { loading, error, tags } }) => {
           if (loading) return '...loading'
           if (error) return `Error: ${error.message}`
           return (
             <Form
-              onSubmit={this.handleSubmit}
+              onSubmit={values => this.saveItem(values, addItem)}
               validate={validate}
               render={({
                 handleSubmit,
@@ -194,7 +223,7 @@ class ShareForm extends Component {
                       Submit
                     </Button>
                   </div>
-                  <pre>{JSON.stringify(values, 0, 2)}</pre>
+                  <pre>{JSON.stringify(addItem.error, 0, 2)}</pre>
                 </form>
               )}
             />

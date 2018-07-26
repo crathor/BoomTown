@@ -50,25 +50,21 @@ class AccountForm extends Component {
 
     return (
       <AuthContainer>
-        {({ signup: { signup }, login: { login } }) => (
+        {({ signup, login }) => (
           <Form
             onSubmit={
               this.state.formToggle
-                ? () => {
-                    login({
+                ? values => {
+                    login.mutation({
                       variables: {
-                        user: { email: 'cdog@gmail.com', password: 'password' }
+                        user: values
                       }
                     })
                   }
-                : () => {
-                    signup({
+                : values => {
+                    signup.mutation({
                       variables: {
-                        user: {
-                          fullname: 'cdog',
-                          email: 'cdog@gmail.com',
-                          password: 'password'
-                        }
+                        user: values
                       }
                     })
                   }

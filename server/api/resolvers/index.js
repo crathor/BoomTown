@@ -16,7 +16,7 @@
 const { ApolloError } = require('apollo-server')
 
 // @TODO: Uncomment these lines later when we add auth
-// const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 const authMutations = require('./auth')
 // -------------------------------
 const { UploadScalar, DateScalar } = require('../custom-types')
@@ -152,13 +152,13 @@ module.exports = function(app) {
          * @TODO: Replace this mock return statement with the correct user from Postgres
          * or null in the case where the item has not been borrowed.
          */
+      },
+      async imageurl({ imageurl, imageid, mimetype, data }) {
+        if (imageurl) return imageurl
+        if (imageid) {
+          return `data:${mimetype};base64, ${data}`
+        }
       }
-      // async imageurl({ imageurl, imageid, mimetype, data }) {
-      //   if (imageurl) return imageurl
-      //   if (imageid) {
-      //     return `data:${mimetype};base64, ${data}`
-      //   }
-      // }
       // -------------------------------
     },
 
@@ -168,6 +168,18 @@ module.exports = function(app) {
 
       ...authMutations(app),
       async addItem(parent, args, context, info) {
+        try {
+          const image = await args.image
+          const user = await jwt.decode(context.token, app.get('JWT_SECRET'))
+          const newItem = await context.pgResource.saveNewItem({
+            item: args.item,
+            image,
+            user
+          })
+          return newItem
+        } catch (error) {
+          console.log(error)
+        }
         /**
          *  @TODO: Destructuring
          *
@@ -180,15 +192,6 @@ module.exports = function(app) {
          *  Again, you may look at the user resolver for an example of what
          *  destructuring should look like.
          */
-
-        image = await image
-        const user = await jwt.decode(context.token, app.get('JWT_SECRET'))
-        const newItem = await context.pgResource.saveNewItem({
-          item: args.item,
-          image: args.image,
-          user
-        })
-        return newItem
       }
     }
   }

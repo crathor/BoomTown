@@ -18,7 +18,9 @@ const signup = ({ render }) => {
   return (
     <Mutation mutation={SIGNUP_MUTATION}>
       {/* this is an arbitrary render where you will pass your two arguments into a single one */}
-      {(signup, user) => render({ signup, user })}
+      {(mutation, data, error, loading) =>
+        render({ mutation, error, data, loading })
+      }
     </Mutation>
   )
 }
@@ -30,7 +32,9 @@ const login = ({ render }) => {
   return (
     <Mutation mutation={LOGIN_MUTATION}>
       {/* this is an arbitrary render where you will pass your two arguments into a single one */}
-      {(login, user) => render({ login, user })}
+      {(mutation, data, error, loading) =>
+        render({ mutation, error, data, loading })
+      }
     </Mutation>
   )
 }

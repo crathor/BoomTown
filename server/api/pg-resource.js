@@ -174,6 +174,14 @@ module.exports = function(postgres) {
                 // Generate new Item query
                 // @TODO
                 // -------------------------------
+                const itemQuery = {
+                  text:
+                    'INSERT INTO items (title, description, ownerid) VALUES ($1, $2, $3) RETURNING *',
+                  values: [title, description, 1] // 1 will become user
+                }
+
+                const newItem = await client.query(itemQuery)
+                const itemId = newItem.rows[0].id
 
                 // Insert new Item
                 // @TODO
@@ -183,7 +191,7 @@ module.exports = function(postgres) {
                   text:
                     'INSERT INTO uploads (itemid, filename, mimetype, encoding, data) VALUES ($1, $2, $3, $4, $5) RETURNING *',
                   values: [
-                    // itemid,
+                    itemId,
                     image.filename,
                     image.mimetype,
                     'base64',
@@ -206,6 +214,15 @@ module.exports = function(postgres) {
                 // Generate tag relationships query (use the'tagsQueryString' helper function provided)
                 // @TODO
                 // -------------------------------
+                const tagsQuery = {
+                  text: `INSERT INTO itemtags (tagid, itemid) VALUES ${tagsQueryString(
+                    [...tags],
+                    itemId,
+                    ''
+                  )}`,
+                  values: tags.map(tag => tag.id)
+                }
+                await client.query(tagsQuery)
 
                 // Insert tags
                 // @TODO
@@ -219,7 +236,7 @@ module.exports = function(postgres) {
                   // release the client back to the pool
                   done()
                   // Uncomment this resolve statement when you're ready!
-                  // resolve(newItem.rows[0])
+                  resolve(newItem.rows[0])
                   // -------------------------------
                 })
               })
