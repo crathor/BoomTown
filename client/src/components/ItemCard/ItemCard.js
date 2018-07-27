@@ -23,7 +23,6 @@ const ItemCard = ({ item, classes, hideButton, history }) => {
       <CardMedia
         className={classes.media}
         image={item.imageurl}
-        title="Contemplative Reptile"
         onClick={() => history.push(`/profile/${item.itemowner.id}`)}
       />
       <CardHeader

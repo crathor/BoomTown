@@ -96,13 +96,7 @@ class ShareForm extends Component {
             <Form
               onSubmit={values => this.saveItem(values, addItem)}
               validate={validate}
-              render={({
-                handleSubmit,
-                submitting,
-                pristine,
-                invalid,
-                values
-              }) => (
+              render={({ handleSubmit, submitting, pristine, invalid }) => (
                 <form onSubmit={handleSubmit} className={classes.form}>
                   <FormSpy
                     subscription={{ values: true }}
@@ -193,7 +187,6 @@ class ShareForm extends Component {
                       Submit
                     </Button>
                   </div>
-                  <pre>{JSON.stringify(addItem.error, 0, 2)}</pre>
                 </form>
               )}
             />

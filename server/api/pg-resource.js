@@ -1,11 +1,6 @@
 var strs = require('stringstream')
 
 function tagsQueryString(tags, itemid, result) {
-  /**
-   * Challenge:
-   * This function is recursive, and a little complicated.
-   * Can you refactor it to be simpler / more readable?
-   */
   const length = tags.length
   return length === 0
     ? `${result};`
@@ -22,7 +17,7 @@ module.exports = function(postgres) {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
         text:
-          'INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *', // @TODO: Authentication - Server
+          'INSERT INTO users (fullname, email, password) VALUES ($1, $2, $3) RETURNING *',
         values: [fullname, email, password]
       }
       try {
@@ -41,7 +36,7 @@ module.exports = function(postgres) {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE email = $1 ', // @TODO: Authentication - Server
+        text: 'SELECT * FROM users WHERE email = $1 ',
         values: [email]
       }
       try {
@@ -54,7 +49,7 @@ module.exports = function(postgres) {
     },
     async getUserById(id) {
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE id = $1', // @TODO: Basic queries
+        text: 'SELECT * FROM users WHERE id = $1',
         values: [id]
       }
       try {
@@ -62,7 +57,6 @@ module.exports = function(postgres) {
         if (!user) throw 'User was not found.'
         return user.rows[0]
       } catch (e) {
-        // still need to figure out errors
         throw 'User was not found.'
       }
     },
@@ -160,7 +154,7 @@ module.exports = function(postgres) {
                 const itemQuery = {
                   text:
                     'INSERT INTO items (title, description, ownerid) VALUES ($1, $2, $3) RETURNING *',
-                  values: [title, description, 567] // 1 will become user
+                  values: [title, description, 565]
                 }
 
                 const newItem = await client.query(itemQuery)

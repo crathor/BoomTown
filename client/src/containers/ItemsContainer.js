@@ -3,7 +3,7 @@ import { Query, Mutation } from 'react-apollo'
 import React from 'react'
 
 // @TODO: Uncommment this line when the ViewerProvider is added to the app.
-// import { ViewerContext } from '../context/ViewerProvider'
+import { ViewerContext } from '../context/ViewerProvider'
 // -------------------------------
 
 import {
@@ -13,13 +13,20 @@ import {
   ADD_ITEM_MUTATION
 } from '../apollo/queries'
 
-const itemsData = ({ filter, render }) => {
+const itemsData = ({ render }) => {
   return (
-    <Query query={ALL_ITEMS_QUERY} variables={{ filter: filter || null }}>
-      {({ loading, error, data: { items } = {} }) =>
-        render({ loading, error, items })
-      }
-    </Query>
+    <ViewerContext.Consumer>
+      {({ loading, viewer, error }) => {
+        if (loading) return '...loading'
+        return (
+          <Query query={ALL_ITEMS_QUERY} variables={{ filter: viewer.id }}>
+            {({ loading, error, data: { items } = {} }) =>
+              render({ loading, error, items })
+            }
+          </Query>
+        )
+      }}
+    </ViewerContext.Consumer>
   )
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all the items.
@@ -33,12 +40,18 @@ const itemsData = ({ filter, render }) => {
 
 const userItemsData = ({ id, render }) => {
   return (
-    <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: id || 1 }}>
-      {/* REFACTOR THIS ONCE AUTHENTICATION IS SET UP */}
-      {({ loading, error, data: { user } = {} }) =>
-        render({ loading, error, user })
-      }
-    </Query>
+    <ViewerContext.Consumer>
+      {({ loading, viewer, error }) => {
+        if (loading) return '...loading'
+        return (
+          <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: viewer.id }}>
+            {({ loading, error, data: { user } = {} }) =>
+              render({ loading, error, user })
+            }
+          </Query>
+        )
+      }}
+    </ViewerContext.Consumer>
   )
   /**
    * @TODO: Use Apollo's <Query /> component to fetch all of a user's items.
@@ -67,7 +80,10 @@ const addItem = ({ render }) => {
    * latest items for the user.
    */
   return (
-    <Mutation mutation={ADD_ITEM_MUTATION}>
+    <Mutation
+      mutation={ADD_ITEM_MUTATION}
+      refetchQueries={result => [{ query: ALL_USER_ITEMS_QUERY }]}
+    >
       {(mutation, data, error, loading) =>
         render({ mutation, data, error, loading })
       }

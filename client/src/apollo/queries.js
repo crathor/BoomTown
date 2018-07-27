@@ -86,8 +86,8 @@ export const ADD_ITEM_MUTATION = gql`
  */
 
 export const VIEWER_QUERY = gql`
-  query getUser($id: ID!) {
-    user(id: $id) {
+  query {
+    viewer {
       id
       email
       fullname
@@ -97,15 +97,15 @@ export const VIEWER_QUERY = gql`
 `
 export const LOGOUT_MUTATION = gql`
   mutation {
-    # @TODO: Run the logout mutation.
-    return
-    null
+    logout
   }
 `
 
 export const SIGNUP_MUTATION = gql`
   mutation signup($user: SignupInput!) {
-    signup(user: $user)
+    signup(user: $user) {
+      id
+    }
   }
 `
 
