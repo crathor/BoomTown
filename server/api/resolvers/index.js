@@ -106,13 +106,13 @@ module.exports = function(app) {
         } catch (e) {
           throw new ApolloError(e)
         }
-      },
-      async imageurl({ imageurl, imageid, mimetype, data }) {
-        if (imageurl) return imageurl
-        if (imageid) {
-          return `data:${mimetype};base64, ${data}`
-        }
       }
+      // async imageurl({ imageurl, imageid, mimetype, data }) {
+      //   if (imageurl) return imageurl
+      //   if (imageid) {
+      //     return `data:${mimetype};base64, ${data}`
+      //   }
+      // }
     },
 
     Mutation: {

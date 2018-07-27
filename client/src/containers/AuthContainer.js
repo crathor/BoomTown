@@ -16,6 +16,7 @@ const signup = ({ render }) => {
     <Mutation
       mutation={SIGNUP_MUTATION}
       refetchQueries={result => [{ query: VIEWER_QUERY }]}
+      onCompleted={() => client.resetStore()}
     >
       {(mutation, data, error, loading) =>
         render({ mutation, error, data, loading })

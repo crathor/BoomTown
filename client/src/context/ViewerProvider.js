@@ -7,7 +7,7 @@ export const ViewerContext = React.createContext()
 
 export const ViewerProvider = ({ children }) => {
   return (
-    <Query query={VIEWER_QUERY}>
+    <Query query={VIEWER_QUERY} fetchPolicy="network-only">
       {({ data: { viewer }, loading, error }) => (
         <ViewerContext.Provider value={{ viewer, loading, error }}>
           {children}

@@ -44,7 +44,10 @@ const userItemsData = ({ id, render }) => {
       {({ loading, viewer, error }) => {
         if (loading) return '...loading'
         return (
-          <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: viewer.id }}>
+          <Query
+            query={ALL_USER_ITEMS_QUERY}
+            variables={{ id: id || viewer.id }}
+          >
             {({ loading, error, data: { user } = {} }) =>
               render({ loading, error, user })
             }
@@ -82,7 +85,7 @@ const addItem = ({ render }) => {
   return (
     <Mutation
       mutation={ADD_ITEM_MUTATION}
-      refetchQueries={result => [{ query: ALL_USER_ITEMS_QUERY }]}
+      refetchQueries={result => [{ query: ALL_ITEMS_QUERY }]}
     >
       {(mutation, data, error, loading) =>
         render({ mutation, data, error, loading })

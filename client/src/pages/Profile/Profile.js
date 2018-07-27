@@ -32,47 +32,44 @@ const getAmountOfBorrowedUserItems = arr => {
 }
 
 const Profile = ({ classes, match }) => (
-  <MainGrid>
-    <ItemsContainer id={match.params.userid}>
-      {({ userItemsData: { loading, error, user } }) => {
-        if (loading) return '...loading'
-        if (error) return `Error: ${error.message}`
-        const amountOfUserItems = getAmountOfUserItems(user.items)
-        const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(
-          user.borrowed
-        )
-        const userData = (
-          <Grid item xs={12}>
-            <Card raised className={classes.profileHeader}>
-              <CardHeader
-                className={classes.header}
-                avatar={
-                  <Gravatar
-                    email={user.email}
-                    style={{ borderRadius: '50%' }}
-                  />
-                }
-                title={
-                  <Typography color="textSecondary" variant="display3">
-                    {user.fullname}
-                  </Typography>
-                }
-              />
-              <CardContent className={classes.content}>
-                <Typography variant="headline">
-                  {amountOfUserItems} {amountOfUserBorrowedItems}
+  <ItemsContainer id={match.params.userid}>
+    {({ userItemsData: { loading, error, user } }) => {
+      if (loading) return '...loading'
+      if (error) return `Error: ${error.message}`
+      const amountOfUserItems = getAmountOfUserItems(user.items)
+      const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(
+        user.borrowed
+      )
+      const userData = (
+        <Grid item xs={12}>
+          <Card raised className={classes.profileHeader}>
+            <CardHeader
+              className={classes.header}
+              avatar={
+                <Gravatar email={user.email} style={{ borderRadius: '50%' }} />
+              }
+              title={
+                <Typography color="textSecondary" variant="display3">
+                  {user.fullname}
                 </Typography>
-                <Typography variant="headline">{user.bio}</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        )
-        const userItems = user.items.map(item => (
-          <Grid key={item.id} item xs={4}>
-            <ItemCard item={item} />
-          </Grid>
-        ))
-        return (
+              }
+            />
+            <CardContent className={classes.content}>
+              <Typography variant="headline">
+                {amountOfUserItems} {amountOfUserBorrowedItems}
+              </Typography>
+              <Typography variant="headline">{user.bio}</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
+      )
+      const userItems = user.items.map(item => (
+        <Grid key={item.id} item xs={4}>
+          <ItemCard item={item} />
+        </Grid>
+      ))
+      return (
+        <MainGrid>
           <Fragment>
             {userData}
             <Grid item xs={12}>
@@ -82,10 +79,10 @@ const Profile = ({ classes, match }) => (
             </Grid>
             {userItems}
           </Fragment>
-        )
-      }}
-    </ItemsContainer>
-  </MainGrid>
+        </MainGrid>
+      )
+    }}
+  </ItemsContainer>
 )
 
 export default withStyles(styles)(Profile)

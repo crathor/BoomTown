@@ -9,7 +9,7 @@ module.exports = gql`
   type Item @auth {
     id: ID!
     title: String!
-    imageurl: String
+    imageurl: String!
     description: String!
     itemowner: User!
     tags: [Tag]
