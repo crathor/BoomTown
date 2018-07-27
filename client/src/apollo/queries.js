@@ -27,8 +27,6 @@ const ItemFields = gql`
       email
       bio
     }
-    # See the Apollo docs for instructions on how to use fragments:
-    # https://www.apollographql.com/docs/angular/features/fragments.html
   }
 `
 export const ITEM_QUERY = gql`
@@ -36,7 +34,6 @@ export const ITEM_QUERY = gql`
     items {
       ...ItemFields
     }
-    # @TODO: Query an item by its id and return the ItemFields fragment.
   }
   ${ItemFields}
 `
@@ -47,11 +44,6 @@ export const ALL_ITEMS_QUERY = gql`
       ...ItemFields
     }
   }
-  # query getItems($filter: ID) {  #   items(filter: $filter) {  #     id
-  #     description
-  #   }
-  #   # @TODO: Query items (optionally by tag id) and return the ItemFields fragment.
-  # }
   ${ItemFields}
 `
 
@@ -69,7 +61,6 @@ export const ALL_USER_ITEMS_QUERY = gql`
       }
     }
   }
-  # @TODO: Query the bio, email, fullname, items, and borrowed for the user by id    # Use the ItemFields fragment for the items and borrowed fields.  }
   ${ItemFields}
 `
 
@@ -84,8 +75,6 @@ export const ALL_TAGS_QUERY = gql`
 
 export const ADD_ITEM_MUTATION = gql`
   mutation addItem($item: NewItemInput!, $image: Upload!) {
-    # @TODO: Pass the item and image into the addItem mutation as arguments
-    # and return the new item id when the mutation is complete.
     addItem(item: $item, image: $image) {
       id
     }
@@ -105,7 +94,6 @@ export const VIEWER_QUERY = gql`
       bio
     }
   }
-  # @TODO: Query the id, email, fullname, and bio fields for the viewer.
 `
 export const LOGOUT_MUTATION = gql`
   mutation {
@@ -119,14 +107,10 @@ export const SIGNUP_MUTATION = gql`
   mutation signup($user: SignupInput!) {
     signup(user: $user)
   }
-  # @TODO: Pass the user into the signup mutation as an argument
-  # and return the id of the new user when the mutation is complete.
 `
 
 export const LOGIN_MUTATION = gql`
   mutation login($user: LoginInput!) {
     login(user: $user)
-    # @TODO: Pass the user into the login mutation as an argument
-    # and return the id of the new user when the mutation is complete.
   }
 `
