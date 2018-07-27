@@ -160,7 +160,7 @@ module.exports = function(postgres) {
                 const itemQuery = {
                   text:
                     'INSERT INTO items (title, description, ownerid) VALUES ($1, $2, $3) RETURNING *',
-                  values: [title, description, 565] // 1 will become user
+                  values: [title, description, 567] // 1 will become user
                 }
 
                 const newItem = await client.query(itemQuery)

@@ -27,7 +27,7 @@ class DropMenu extends Component {
   handleRouteChange = () => {
     this.props.showShareButton()
     this.handleClose()
-    this.props.history.push('/profile/1')
+    this.props.history.push('/profile/565')
   }
 
   render() {

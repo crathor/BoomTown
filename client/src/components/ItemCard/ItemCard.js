@@ -9,12 +9,13 @@ import {
   Typography
 } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import { withRouter } from 'react-router-dom'
 import moment from 'moment'
 import Gravatar from 'react-gravatar'
 
 import styles from './styles'
 
-const ItemCard = ({ item, classes, hideButton }) => {
+const ItemCard = ({ item, classes, hideButton, history }) => {
   const itemTags = item.tags.map(tag => tag.title)
   const itemCreatedTime = new Date(item.created)
   return (
@@ -23,6 +24,7 @@ const ItemCard = ({ item, classes, hideButton }) => {
         className={classes.media}
         image={item.imageurl}
         title="Contemplative Reptile"
+        onClick={() => history.push(`/profile/${item.itemowner.id}`)}
       />
       <CardHeader
         avatar={
@@ -59,4 +61,4 @@ const ItemCard = ({ item, classes, hideButton }) => {
   )
 }
 
-export default withStyles(styles)(ItemCard)
+export default withRouter(withStyles(styles)(ItemCard))

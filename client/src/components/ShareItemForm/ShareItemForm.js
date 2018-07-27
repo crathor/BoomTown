@@ -12,6 +12,9 @@ import CheckBoxItem from './CheckBoxItem'
 import { Form, Field, FormSpy } from 'react-final-form'
 import styles from './styles'
 import { validate } from './helpers/validation'
+import { getBase64Url } from './helpers/getBase64Url'
+import { getAndSortTags } from './helpers/tagsHelper'
+import { maxCharLength } from './helpers/charLength'
 import { connect } from 'react-redux'
 import { updateForm, resetImage, resetForm } from '../../redux/actions'
 
@@ -43,46 +46,15 @@ class ShareForm extends Component {
   handleSubmit = values => {
     console.log(values)
   }
-  maxCharLength = (charLimit, value) => {
-    if (value.length > charLimit) {
-      return value.slice(0, value.length - 1)
-    }
-    return value
-  }
-  getBase64Url() {
-    return new Promise(resolve => {
-      const reader = new FileReader()
-      reader.onload = e => {
-        resolve(
-          `data:${this.state.fileSelected.mimeType};base64, ${btoa(
-            e.target.result
-          )}`
-        )
-      }
-      reader.readAsBinaryString(this.state.fileSelected)
-    })
-  }
-  getAndSortTags = tags => {
-    if (tags) {
-      return tags
-        .map(tag => {
-          tag = JSON.parse(tag)
-          delete tag.__typename
-          return tag
-        })
-        .sort((a, b) => a.title > b.title)
-    }
-    return []
-  }
   dispatchUpdate(values, updateForm) {
     if (!values.imageurl && this.state.fileSelected) {
-      this.getBase64Url().then(imageurl => {
+      getBase64Url(this.state.fileSelected).then(imageurl => {
         updateForm({
           imageurl
         })
       })
     }
-    const tags = this.getAndSortTags(values.tags)
+    const tags = getAndSortTags(values.tags)
     updateForm({
       ...values,
       tags
@@ -95,7 +67,7 @@ class ShareForm extends Component {
     } = this.fileRef.current
     if (!validity.valid || !file) return
     try {
-      const tags = this.getAndSortTags(values.tags)
+      const tags = getAndSortTags(values.tags)
       const itemData = {
         ...values,
         tags
@@ -118,6 +90,7 @@ class ShareForm extends Component {
       <ItemsContainer>
         {({ addItem, tagData: { loading, error, tags } }) => {
           if (loading) return '...loading'
+          if (addItem.loading) return '...loading'
           if (error) return `Error: ${error.message}`
           return (
             <Form
@@ -176,7 +149,7 @@ class ShareForm extends Component {
                         <TextField
                           {...input}
                           onChange={e => {
-                            const value = this.maxCharLength(55, e.target.value)
+                            const value = maxCharLength(55, e.target.value)
                             input.onChange(value)
                           }}
                           label="name your item"
@@ -191,10 +164,7 @@ class ShareForm extends Component {
                         <TextField
                           {...input}
                           onChange={e => {
-                            const value = this.maxCharLength(
-                              150,
-                              e.target.value
-                            )
+                            const value = maxCharLength(150, e.target.value)
                             input.onChange(value)
                           }}
                           label="description"

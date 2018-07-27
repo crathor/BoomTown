@@ -2,7 +2,10 @@ const styles = theme => ({
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    '&:hover': {
+      cursor: 'pointer'
+    }
   },
   card: {
     display: 'flex',
