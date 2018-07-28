@@ -9,13 +9,6 @@ import {
   Grid
 } from '@material-ui/core'
 
-/**
- * @TODO: Uncomment the following lines when authentication is added to the form
- *
- *
- * import validate from './helpers/validation'
- */
-
 import AuthContainer from '../../containers/AuthContainer'
 import { Form, Field } from 'react-final-form'
 import styles from './styles'

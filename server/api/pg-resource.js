@@ -93,7 +93,8 @@ module.exports = function(postgres) {
           FROM items item
           INNER JOIN uploads up
           ON up.itemid = item.id
-          WHERE ownerid = $1`,
+          WHERE ownerid = $1
+          ORDER BY created DESC`,
           values: [id]
         })
         return items.rows
@@ -104,7 +105,12 @@ module.exports = function(postgres) {
     async getBorrowedItemsForUser(id) {
       try {
         const items = await postgres.query({
-          text: `SELECT * FROM items WHERE borrowerid = $1`,
+          text: `SELECT item.id, item.title,item.description,item.created, item.ownerid, item.borrowerid, up.data as imageurl 
+          FROM items item
+          INNER JOIN uploads up
+          ON up.itemid = item.id
+          WHERE borrowerid = $1
+          ORDER BY created DESC`,
           values: [id]
         })
         return items.rows
@@ -117,7 +123,7 @@ module.exports = function(postgres) {
         const tags = await postgres.query('SELECT * FROM tags')
         return tags.rows
       } catch (error) {
-        throw "Couldn't retireve tags"
+        throw "Couldn't retrieve tags"
       }
     },
     async getTagsForItem(id) {
@@ -160,7 +166,7 @@ module.exports = function(postgres) {
                 const itemQuery = {
                   text:
                     'INSERT INTO items (title, description, ownerid) VALUES ($1, $2, $3) RETURNING *',
-                  values: [title, description, 565]
+                  values: [title, description, user.id]
                 }
 
                 const newItem = await client.query(itemQuery)
@@ -198,7 +204,6 @@ module.exports = function(postgres) {
                   }
                   // release the client back to the pool
                   done()
-                  // Uncomment this resolve statement when you're ready!
                   resolve(newItem.rows[0])
                   // -------------------------------
                 })

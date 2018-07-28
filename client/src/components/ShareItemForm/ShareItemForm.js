@@ -177,7 +177,7 @@ class ShareForm extends Component {
                         ))}
                     </Grid>
                   </div>
-                  <div className="buttons">
+                  <div>
                     <Button
                       variant="contained"
                       disabled={submitting || pristine || invalid}

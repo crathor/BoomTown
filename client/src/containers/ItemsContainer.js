@@ -1,10 +1,7 @@
 import { adopt } from 'react-adopt'
 import { Query, Mutation } from 'react-apollo'
 import React from 'react'
-
-// @TODO: Uncommment this line when the ViewerProvider is added to the app.
 import { ViewerContext } from '../context/ViewerProvider'
-// -------------------------------
 
 import {
   ALL_TAGS_QUERY,
@@ -28,14 +25,6 @@ const itemsData = ({ render }) => {
       }}
     </ViewerContext.Consumer>
   )
-  /**
-   * @TODO: Use Apollo's <Query /> component to fetch all the items.
-   *
-   * Note: Your query will need to filter out borrowed items.
-   *
-   * The final query will ultimately filter out items that belong to the
-   * currently logged-in user once you have added authentication.
-   */
 }
 
 const userItemsData = ({ id, render }) => {
@@ -56,12 +45,6 @@ const userItemsData = ({ id, render }) => {
       }}
     </ViewerContext.Consumer>
   )
-  /**
-   * @TODO: Use Apollo's <Query /> component to fetch all of a user's items.
-   *
-   * Note: Your query will need to retrieve only items that belong to a
-   * specific user id.
-   */
 }
 
 const tagData = ({ render }) => (
@@ -70,36 +53,35 @@ const tagData = ({ render }) => (
       render({ loading, error, tags })
     }
   </Query>
-  /**
-   * @TODO: Use Apollo's <Query /> component to fetch all the tags.
-   */
 )
 
 const addItem = ({ render }) => {
-  /**
-   * @TODO: Use Apollo's <Mutation /> component to use the signup mutation.
-   *
-   * Note: Be sure to use `refetchQueries` to refresh Apollo's cache with the
-   * latest items for the user.
-   */
   return (
-    <Mutation
-      mutation={ADD_ITEM_MUTATION}
-      refetchQueries={result => [{ query: ALL_ITEMS_QUERY }]}
-    >
-      {(mutation, data, error, loading) =>
-        render({ mutation, data, error, loading })
-      }
-    </Mutation>
+    <ViewerContext.Consumer>
+      {({ loading, viewer, error }) => {
+        if (loading) return '...loading'
+        return (
+          <Mutation
+            variables={{ user: { ...viewer } }}
+            mutation={ADD_ITEM_MUTATION}
+            refetchQueries={result => [
+              { query: ALL_USER_ITEMS_QUERY, variables: { id: viewer.id } }
+            ]}
+          >
+            {(mutation, { data, error, loading }) =>
+              render({ mutation, data, error, loading })
+            }
+          </Mutation>
+        )
+      }}
+    </ViewerContext.Consumer>
   )
 }
 const ItemsContainer = adopt({
-  // @TODO: Uncomment each line as you write the corresponding query.
   tagData,
   itemsData,
   userItemsData,
   addItem
-  // -------------------------------
 })
 
 export default ItemsContainer

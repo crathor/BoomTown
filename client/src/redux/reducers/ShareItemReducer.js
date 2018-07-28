@@ -5,7 +5,6 @@ const initialState = {
     'https://dummyimage.com/370X200/cccccc/212121.png&text=Select+an+image',
   title: 'Name your item',
   description: 'Describe your item',
-  itemowner: { email: 'codyrathor@gmail.com', fullname: 'crathor' },
   created: new Date(),
   tags: []
 }

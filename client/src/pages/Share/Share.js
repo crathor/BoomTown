@@ -4,7 +4,7 @@ import styles from './styles'
 import ShareForm from '../../components/ShareItemForm'
 import ShareItemPreview from '../../components/ShareItemPreview'
 
-const Share = ({ classes, item }) => {
+const Share = ({ classes }) => {
   return (
     <Grid
       container
