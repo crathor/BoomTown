@@ -13,6 +13,7 @@ import MainGrid from '../../components/MainGrid'
 import Gravatar from 'react-gravatar'
 
 import styles from './styles'
+import LoadingPage from '../../components/LoadingPage'
 
 const getAmountOfUserItems = arr => {
   switch (arr.length) {
@@ -34,8 +35,7 @@ const getAmountOfBorrowedUserItems = arr => {
 const Profile = ({ classes, match }) => (
   <ItemsContainer id={match.params.userid}>
     {({ userItemsData: { loading, error, user } }) => {
-      if (loading) return '...loading'
-      if (error) return `Error: ${error.message}`
+      if (loading) return <LoadingPage />
       const amountOfUserItems = getAmountOfUserItems(user.items)
       const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(
         user.borrowed

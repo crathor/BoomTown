@@ -17,6 +17,7 @@ import { getAndSortTags } from './helpers/tagsHelper'
 import { maxCharLength } from './helpers/charLength'
 import { connect } from 'react-redux'
 import { updateForm, resetImage, resetForm } from '../../redux/actions'
+import Spinner from '../Spinner'
 
 class ShareForm extends Component {
   constructor(props) {
@@ -43,11 +44,8 @@ class ShareForm extends Component {
   handleImageSelect = event => {
     this.setState({ fileSelected: event.target.files[0] })
   }
-  handleSubmit = values => {
-    console.log(values)
-  }
   dispatchUpdate(values, updateForm) {
-    if (!values.imageurl && this.state.fileSelected) {
+    if (this.state.fileSelected) {
       getBase64Url(this.state.fileSelected).then(imageurl => {
         updateForm({
           imageurl
@@ -78,7 +76,8 @@ class ShareForm extends Component {
           image: file
         }
       })
-      this.setState({ done: true })
+      this.props.resetForm()
+      this.handleImageReset()
     } catch (error) {
       console.log(error)
     }
@@ -101,7 +100,7 @@ class ShareForm extends Component {
                   <FormSpy
                     subscription={{ values: true }}
                     component={({ values }) => {
-                      if (values) {
+                      if (Object.keys(values).length !== 0) {
                         this.dispatchUpdate(values, updateForm)
                       }
                       return ''
@@ -130,8 +129,12 @@ class ShareForm extends Component {
                           className={classes.fileUpload}
                           type="file"
                           inputRef={this.fileRef}
-                          onChange={event => {
-                            this.handleImageSelect(event)
+                          onChange={async event => {
+                            await this.handleImageSelect(event)
+                            this.dispatchUpdate(
+                              { imageurl: 'selected' }, // allows redux to update the image
+                              updateForm
+                            )
                           }}
                         />
                       </Fragment>
@@ -178,14 +181,18 @@ class ShareForm extends Component {
                     </Grid>
                   </div>
                   <div>
-                    <Button
-                      variant="contained"
-                      disabled={submitting || pristine || invalid}
-                      color="primary"
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
+                    {submitting ? (
+                      <Spinner size={30} color="secondary" />
+                    ) : (
+                      <Button
+                        variant="contained"
+                        disabled={submitting || pristine || invalid}
+                        color="primary"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    )}
                   </div>
                 </form>
               )}

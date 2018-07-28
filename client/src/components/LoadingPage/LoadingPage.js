@@ -1,65 +1,21 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { withStyles, Grid, Typography } from '@material-ui/core'
+import Spinner from '../Spinner'
 
-const styles = theme => ({
-  progress: {
-    margin: theme.spacing.unit * 2
-  }
-})
+import styles from './styles'
 
-class LoadingPage extends Component {
-  timer = null
-
-  state = {
-    completed: 0
-  }
-
-  componentDidMount() {
-    this.timer = setInterval(this.progress, 20)
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
-
-  progress = () => {
-    const { completed } = this.state
-    this.setState({ completed: completed >= 100 ? 0 : completed + 1 })
-  }
-
-  render() {
-    const { classes } = this.props
-    return (
-      <div>
-        <CircularProgress
-          className={classes.progress}
-          variant="determinate"
-          value={this.state.completed}
-        />
-        <CircularProgress
-          className={classes.progress}
-          variant="determinate"
-          size={50}
-          value={this.state.completed}
-        />
-        <CircularProgress
-          className={classes.progress}
-          color="secondary"
-          variant="determinate"
-          value={this.state.completed}
-        />
-        <CircularProgress
-          className={classes.progress}
-          color="secondary"
-          variant="determinate"
-          size={50}
-          value={this.state.completed}
-        />
-      </div>
-    )
-  }
+const LoadingPage = ({ classes }) => {
+  return (
+    <Grid container justify="center" className={classes.root}>
+      <Grid xs={6} className={classes.loader}>
+        <Spinner color="primary" size={100} />
+        <Typography className={classes.quote} variant="display1">
+          "Just a few seconds til the Boom"
+        </Typography>
+      </Grid>
+    </Grid>
+  )
 }
 
 LoadingPage.propTypes = {

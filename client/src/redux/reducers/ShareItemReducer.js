@@ -22,9 +22,7 @@ export default (state = initialState, action) => {
         imageurl: initialState.imageurl
       }
     case RESET_FORM:
-      return {
-        ...initialState
-      }
+      return initialState
 
     default:
       return state

@@ -4,12 +4,12 @@ import ItemCard from '../../components/ItemCard'
 import ItemsContainer from '../../containers/ItemsContainer'
 import MainGrid from '../../components/MainGrid'
 import styles from './styles'
+import LoadingPage from '../../components/LoadingPage'
 
 const Items = ({ classes }) => (
   <ItemsContainer>
     {({ itemsData: { loading, error, items } }) => {
-      if (loading) return '...loading'
-      if (error) return `Error: ${error.message}`
+      if (loading) return <LoadingPage />
       return (
         <MainGrid>
           {items.map(item => (
