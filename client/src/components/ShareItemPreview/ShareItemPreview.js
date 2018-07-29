@@ -12,7 +12,11 @@ const ShareItemPreview = ({ item }) => (
         fullname: viewer.fullname
       }
       item.created = new Date()
-      return <ItemCard item={item} hideButton />
+      return (
+        <div style={{ width: '450px', height: '550px', marginRight: 10 }}>
+          <ItemCard item={item} hideButton />
+        </div>
+      )
     }}
   </ViewerContext.Consumer>
 )

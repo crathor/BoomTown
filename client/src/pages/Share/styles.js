@@ -4,13 +4,18 @@ const styles = theme => ({
     height: '100%',
     boxSizing: 'border-box',
     padding: theme.spacing.unit * 5,
+    paddingTop: 80,
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing.unit * 20,
-      paddingTop: 80
+      padding: theme.spacing.unit * 20
     },
     [theme.breakpoints.up('lg')]: {
       padding: theme.spacing.unit * 20
     }
+  },
+  rootItem: {
+    maxHeight: 550,
+    display: 'flex',
+    justifyContent: 'center'
   }
 })
 

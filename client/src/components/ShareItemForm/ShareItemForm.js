@@ -107,7 +107,7 @@ class ShareForm extends Component {
                       return ''
                     }}
                   />
-                  <Typography variant="display4" className={classes.headline}>
+                  <Typography className={classes.headline}>
                     Share. Borrow. Prosper.
                   </Typography>
                   <Field name="imageurl">

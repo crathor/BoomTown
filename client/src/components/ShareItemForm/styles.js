@@ -2,7 +2,7 @@ const styles = theme => ({
   headline: {
     fontWeight: 700,
     color: theme.palette.text.primary,
-    fontSize: theme.typography.display4.fontSize,
+    fontSize: theme.typography.display1.fontSize,
     [theme.breakpoints.up('md')]: {
       fontSize: theme.typography.display2.fontSize
     }

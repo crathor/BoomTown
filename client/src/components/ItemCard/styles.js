@@ -11,8 +11,8 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    [theme.breakpoints.up('md')]: {
-      maxHeight: 550
+    [theme.breakpoints.down('xs')]: {
+      margin: 12
     }
   },
   content: {

@@ -14,6 +14,7 @@ const styles = theme => ({
     margin: '0 20px'
   },
   button: {
+    fontSize: 11,
     marginLeft: 'auto',
     marginRight: 16,
     paddingRight: 16,
@@ -22,6 +23,9 @@ const styles = theme => ({
     border: 'none',
     '&:hover': {
       background: 'rgba(0,0,0,0.1)'
+    },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 14
     }
   }
 })

@@ -1,4 +1,4 @@
-import { withStyles, Grid } from '@material-ui/core'
+import { withStyles, Grid, Hidden } from '@material-ui/core'
 import React from 'react'
 import styles from './styles'
 import ShareForm from '../../components/ShareItemForm'
@@ -11,11 +11,14 @@ const Share = ({ classes }) => {
       direction="row"
       justify="space-around"
       className={classes.root}
+      spacing={8}
     >
-      <Grid item xs={4}>
-        <ShareItemPreview />
-      </Grid>
-      <Grid item xs={6}>
+      <Hidden xsDown>
+        <Grid item xs={6} className={classes.rootItem}>
+          <ShareItemPreview />
+        </Grid>
+      </Hidden>
+      <Grid item xs={12} sm={6} className={classes.rootItem}>
         <ShareForm />
       </Grid>
     </Grid>

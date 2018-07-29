@@ -58,7 +58,7 @@ const CheckBoxItem = ({ tag, classes }) => {
       break
   }
   return (
-    <Grid item xs={3}>
+    <Grid item xs={4} sm={3}>
       <Field name="tags" type="checkbox" value={JSON.stringify(tag)}>
         {({ input, meta }) => (
           <InputLabel shrink className={classes.label}>
