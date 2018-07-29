@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import {
   Grid,
   withStyles,
@@ -19,17 +19,17 @@ import LoadingPage from '../../components/LoadingPage'
 const getAmountOfUserItems = arr => {
   switch (arr.length) {
     case 1:
-      return <span>{arr.length} Item shared</span>
+      return <span style={{ marginRight: 8 }}>Item shared</span>
     default:
-      return <span>{arr.length} Items shared</span>
+      return <span style={{ marginRight: 8 }}>Items shared</span>
   }
 }
 const getAmountOfBorrowedUserItems = arr => {
   switch (arr.length) {
     case 1:
-      return <span>{arr.length} Item borrowed</span>
+      return <span>Item borrowed</span>
     default:
-      return <span>{arr.length} Items borrowed</span>
+      return <span>Items borrowed</span>
   }
 }
 
@@ -42,7 +42,7 @@ const Profile = ({ classes, match }) => (
         user.borrowed
       )
       const userData = (
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.root}>
           <Card raised className={classes.profileHeader}>
             <CardHeader
               className={classes.header}
@@ -56,10 +56,20 @@ const Profile = ({ classes, match }) => (
               }
             />
             <CardContent className={classes.content}>
-              <Typography variant="headline">
-                {amountOfUserItems} {amountOfUserBorrowedItems}
-              </Typography>
-              <Typography variant="headline">{user.bio}</Typography>
+              <div className={classes.userItemInfoContainer}>
+                <Typography variant="headline">
+                  <span className={classes.itemCount}>{user.items.length}</span>
+                  {amountOfUserItems}
+                </Typography>
+                <Typography variant="headline" gutterBottom>
+                  <span className={classes.itemCount}>
+                    {user.borrowed.length}
+                  </span>
+                  {amountOfUserBorrowedItems}
+                </Typography>
+              </div>
+              <Typography variant="subheading">"{user.bio}"</Typography>
+              <BorrowedItems items={user.borrowed} />
             </CardContent>
           </Card>
         </Grid>
@@ -71,7 +81,7 @@ const Profile = ({ classes, match }) => (
           style={{ transformOrigin: '50% 100%' }}
           timeout={1000}
         >
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <ItemCard
               item={item}
               hideButton={match.params.userid === viewer.id}
@@ -83,7 +93,7 @@ const Profile = ({ classes, match }) => (
         <MainGrid>
           {userData}
           {user.items.length > 0 && (
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.shared}>
               <Typography variant="display1" color="primary">
                 Shared Items
               </Typography>

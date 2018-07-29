@@ -42,8 +42,7 @@ const userItemsData = ({ id, render }) => {
                 loading,
                 error,
                 user,
-                viewer,
-                viewer: { id: viewer.id }
+                viewer
               })
             }
           </Query>
