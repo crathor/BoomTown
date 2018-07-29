@@ -26,7 +26,7 @@ class ShareForm extends Component {
     this.state = {
       fileSelected: false,
       imageurl: '',
-      submitted: false
+      done: false
     }
     this.fileRef = React.createRef()
   }
@@ -78,6 +78,7 @@ class ShareForm extends Component {
       })
       this.props.resetForm()
       this.handleImageReset()
+      this.setState({ done: true })
     } catch (error) {
       console.log(error)
     }
@@ -88,8 +89,8 @@ class ShareForm extends Component {
     return (
       <ItemsContainer>
         {({ addItem, tagData: { loading, error, tags } }) => {
-          if (loading) return '...loading'
-          if (addItem.loading) return '...loading'
+          if (loading) return <Spinner size={30} color="secondary" />
+          if (addItem.loading) return <Spinner size={30} color="secondary" />
           if (error) return `Error: ${error.message}`
           return (
             <Form

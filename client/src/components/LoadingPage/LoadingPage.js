@@ -8,7 +8,7 @@ import styles from './styles'
 const LoadingPage = ({ classes }) => {
   return (
     <Grid container justify="center" className={classes.root}>
-      <Grid xs={6} className={classes.loader}>
+      <Grid item xs={6} className={classes.loader}>
         <Spinner color="primary" size={100} />
         <Typography className={classes.quote} variant="display1">
           "Just a few seconds til the Boom"

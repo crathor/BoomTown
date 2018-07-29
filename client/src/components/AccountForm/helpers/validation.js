@@ -1,13 +1,18 @@
-export default function validate(values) {
-  const errors = {}
+const validate = (values, userSignUp) => {
+  let errors = {}
   if (!values.email) {
-    errors.email = 'Required'
+    errors.email = 'An email is required'
+  }
+  if (!userSignUp) {
+    // checks if signing up a new user
+    if (!values.fullname) {
+      errors.fullname = 'Please enter your name'
+    }
   }
   if (!values.password) {
-    errors.password = 'Required'
-  }
-  if (values.fullname && !values.fullname) {
-    errors.password = 'Required'
+    errors.password = 'Please enter a password'
   }
   return errors
 }
+
+export default validate

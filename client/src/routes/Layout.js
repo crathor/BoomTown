@@ -6,11 +6,12 @@ import Share from '../pages/Share'
 import Home from '../pages/Home'
 import Header from '../components/Header'
 import { ViewerContext } from '../context/ViewerProvider'
+import LoadingPage from '../components/LoadingPage'
 
 export default () => (
   <ViewerContext.Consumer>
     {({ loading, viewer, error }) => {
-      if (loading) return '...loading'
+      if (loading) return <LoadingPage />
       if (!viewer) {
         return (
           <Switch>

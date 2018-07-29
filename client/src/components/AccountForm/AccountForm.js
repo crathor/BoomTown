@@ -12,57 +12,28 @@ import {
 import AuthContainer from '../../containers/AuthContainer'
 import { Form, Field } from 'react-final-form'
 import styles from './styles'
+import validate from './helpers/validation'
+import logUserIn from './helpers/logUserIn'
+import signUpUser from './helpers/signUpUser'
 
 class AccountForm extends Component {
   state = {
     formToggle: true
   }
-  handleSubmit = values => {
-    return {
-      ...values
-    }
-  }
-  validate = values => {
-    let errors = {}
-    if (!values.email) {
-      errors.email = 'An email is required'
-    }
-    if (!this.state.formToggle) {
-      // checks if signing up a new user
-      if (!values.fullname) {
-        errors.fullname = 'Please enter your name'
-      }
-    }
-    if (!values.password) {
-      errors.password = 'Please enter a password'
-    }
-    return errors
-  }
+
   render() {
     const { classes } = this.props
-
+    const { formToggle } = this.state
     return (
       <AuthContainer>
         {({ signup, login }) => (
           <Form
             onSubmit={
-              this.state.formToggle
-                ? values => {
-                    login.mutation({
-                      variables: {
-                        user: values
-                      }
-                    })
-                  }
-                : values => {
-                    signup.mutation({
-                      variables: {
-                        user: values
-                      }
-                    })
-                  }
+              formToggle
+                ? values => logUserIn(values, login)
+                : values => signUpUser(values, signup)
             }
-            validate={this.validate}
+            validate={values => validate(values, formToggle)}
             render={({ handleSubmit, invalid, submitting, form, pristine }) => (
               <form onSubmit={handleSubmit} className={classes.accountForm}>
                 {!this.state.formToggle && (
