@@ -17,7 +17,7 @@ const signup = ({ render }) => {
       mutation={SIGNUP_MUTATION}
       refetchQueries={result => [{ query: VIEWER_QUERY }]}
     >
-      {(mutation, data, error, loading) =>
+      {(mutation, { data, error, loading }) =>
         render({ mutation, error, data, loading })
       }
     </Mutation>
@@ -30,7 +30,7 @@ const login = ({ render }) => {
       mutation={LOGIN_MUTATION}
       refetchQueries={result => [{ query: VIEWER_QUERY }]}
     >
-      {(mutation, data, error, loading) =>
+      {(mutation, { data, error, loading }) =>
         render({ mutation, error, data, loading })
       }
     </Mutation>
@@ -43,7 +43,7 @@ const logout = ({ render }) => {
       mutation={LOGOUT_MUTATION}
       onCompleted={() => client.resetStore()}
     >
-      {(mutation, data, error, loading) =>
+      {(mutation, { data, error, loading }) =>
         render({ mutation, error, data, loading })
       }
     </Mutation>

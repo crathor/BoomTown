@@ -11,6 +11,7 @@ const ShareItemPreview = ({ item }) => (
         email: viewer.email,
         fullname: viewer.fullname
       }
+      item.created = new Date()
       return <ItemCard item={item} hideButton />
     }}
   </ViewerContext.Consumer>

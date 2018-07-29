@@ -36,7 +36,7 @@ class AccountForm extends Component {
             validate={values => validate(values, formToggle)}
             render={({ handleSubmit, invalid, submitting, form, pristine }) => (
               <form onSubmit={handleSubmit} className={classes.accountForm}>
-                {!this.state.formToggle && (
+                {!formToggle && (
                   <FormControl fullWidth className={classes.formControl}>
                     <InputLabel htmlFor="fullname">Username</InputLabel>
                     <Field name={'fullname'}>
@@ -98,7 +98,7 @@ class AccountForm extends Component {
                       color="secondary"
                       disabled={pristine || invalid || submitting}
                     >
-                      {this.state.formToggle ? 'Enter' : 'Create Account'}
+                      {formToggle ? 'Enter' : 'Create Account'}
                     </Button>
                     <Typography>
                       <button
@@ -111,7 +111,7 @@ class AccountForm extends Component {
                           }))
                         }}
                       >
-                        {this.state.formToggle
+                        {formToggle
                           ? 'Create an account.'
                           : 'Login to existing account.'}
                       </button>
@@ -119,7 +119,12 @@ class AccountForm extends Component {
                   </Grid>
                 </FormControl>
                 <Typography className={classes.errorMessage}>
-                  {/* @TODO: Display sign-up and login errors */}
+                  {login.error
+                    ? 'The email/password is invalid please try again'
+                    : null}
+                  {signup.error
+                    ? 'Something went wrong please try again later'
+                    : null}
                 </Typography>
               </form>
             )}

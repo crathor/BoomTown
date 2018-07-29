@@ -5,7 +5,8 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Typography
+  Typography,
+  Grow
 } from '@material-ui/core'
 import ItemsContainer from '../../containers/ItemsContainer'
 import ItemCard from '../../components/ItemCard'
@@ -64,9 +65,16 @@ const Profile = ({ classes, match }) => (
         </Grid>
       )
       const userItems = user.items.map(item => (
-        <Grid key={item.id} item xs={4}>
-          <ItemCard item={item} />
-        </Grid>
+        <Grow
+          key={item.id}
+          in
+          style={{ transformOrigin: '50% 100%' }}
+          timeout={1000}
+        >
+          <Grid item xs={4}>
+            <ItemCard item={item} hideButton />
+          </Grid>
+        </Grow>
       ))
       return (
         <MainGrid>
