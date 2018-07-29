@@ -81,6 +81,12 @@ export const ADD_ITEM_MUTATION = gql`
   }
 `
 
+export const BORROW_ITEM_MUTATION = gql`
+  mutation borrowItem($item: ID!, $user: ID!) {
+    borrowItem(user: $user, item: $item)
+  }
+`
+
 /**
  * Auth-related queries and mutations.
  */

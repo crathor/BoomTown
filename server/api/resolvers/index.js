@@ -107,6 +107,19 @@ module.exports = function(app) {
         } catch (e) {
           throw new ApolloError(e)
         }
+      },
+      async borrowItem(parent, args, { token, pgResource }, info) {
+        try {
+          const itemid = args.item
+          const user = await jwt.decode(token, app.get('JWT_SECRET'))
+          const updatedItem = await pgResource.borrowItem({
+            itemid,
+            user
+          })
+          return updatedItem
+        } catch (e) {
+          throw new ApolloError(e)
+        }
       }
     }
   }

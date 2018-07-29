@@ -227,6 +227,17 @@ module.exports = function(postgres) {
           }
         })
       })
+    },
+    async borrowItem({ itemid, user }) {
+      try {
+        const item = await postgres.query({
+          text: `UPDATE items SET borrowerid=$1 WHERE id=$2 RETURNING *`,
+          values: [user.id, itemid]
+        })
+        return item.rows
+      } catch (error) {
+        throw 'No Item Found'
+      }
     }
   }
 }
