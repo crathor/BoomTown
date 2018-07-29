@@ -14,6 +14,7 @@ import Menu from './Menu'
 import BoomTownLogo from '../../images/boomtown.svg'
 
 import styles from './styles'
+import { ViewerContext } from '../../context/ViewerProvider'
 
 class Header extends Component {
   state = {
@@ -53,7 +54,14 @@ class Header extends Component {
               Share Something
             </Button>
           </Slide>
-          <Menu showShareButton={this.showShareButton} />
+          <ViewerContext.Consumer>
+            {({ viewer }) => (
+              <Menu
+                showShareButton={this.showShareButton}
+                currentViewer={viewer.id}
+              />
+            )}
+          </ViewerContext.Consumer>
         </Toolbar>
       </AppBar>
     )

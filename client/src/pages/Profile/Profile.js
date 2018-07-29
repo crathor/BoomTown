@@ -35,7 +35,7 @@ const getAmountOfBorrowedUserItems = arr => {
 
 const Profile = ({ classes, match }) => (
   <ItemsContainer id={match.params.userid}>
-    {({ userItemsData: { loading, error, user } }) => {
+    {({ userItemsData: { loading, error, user, viewer } }) => {
       if (loading) return <LoadingPage />
       const amountOfUserItems = getAmountOfUserItems(user.items)
       const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(
@@ -72,21 +72,24 @@ const Profile = ({ classes, match }) => (
           timeout={1000}
         >
           <Grid item xs={4}>
-            <ItemCard item={item} hideButton />
+            <ItemCard
+              item={item}
+              hideButton={match.params.userid === viewer.id}
+            />
           </Grid>
         </Grow>
       ))
       return (
         <MainGrid>
-          <Fragment>
-            {userData}
+          {userData}
+          {user.items.length > 0 && (
             <Grid item xs={12}>
               <Typography variant="display1" color="primary">
                 Shared Items
               </Typography>
             </Grid>
-            {userItems}
-          </Fragment>
+          )}
+          {userItems}
         </MainGrid>
       )
     }}

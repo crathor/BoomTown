@@ -128,7 +128,7 @@ class AccountForm extends Component {
                     ? 'The email/password is invalid please try again'
                     : null}
                   {signup.error
-                    ? 'Something went wrong please try again later'
+                    ? 'An account with that email already exists.'
                     : null}
                 </Typography>
               </form>
