@@ -28,6 +28,9 @@ const styles = theme => ({
   },
   checkboxIcon: {
     fontSize: 35
+  },
+  errorMessage: {
+    color: 'firebrick'
   }
 })
 

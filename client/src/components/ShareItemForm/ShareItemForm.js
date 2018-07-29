@@ -91,7 +91,6 @@ class ShareForm extends Component {
         {({ addItem, tagData: { loading, error, tags } }) => {
           if (loading) return <Spinner size={30} color="secondary" />
           if (addItem.loading) return <Spinner size={30} color="secondary" />
-          if (error) return `Error: ${error.message}`
           return (
             <Form
               onSubmit={values => this.saveItem(values, addItem)}
@@ -187,7 +186,9 @@ class ShareForm extends Component {
                     ) : (
                       <Button
                         variant="contained"
-                        disabled={submitting || pristine || invalid}
+                        disabled={
+                          submitting || pristine || invalid || !fileSelected
+                        }
                         color="primary"
                         type="submit"
                       >
@@ -195,6 +196,11 @@ class ShareForm extends Component {
                       </Button>
                     )}
                   </div>
+                  <Typography className={classes.errorMessage}>
+                    {addItem.error
+                      ? 'Oops! Something went wrong please refresh the page and try again.'
+                      : null}
+                  </Typography>
                 </form>
               )}
             />

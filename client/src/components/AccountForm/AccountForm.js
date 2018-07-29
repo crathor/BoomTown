@@ -15,6 +15,7 @@ import styles from './styles'
 import validate from './helpers/validation'
 import logUserIn from './helpers/logUserIn'
 import signUpUser from './helpers/signUpUser'
+import Spinner from '../Spinner'
 
 class AccountForm extends Component {
   state = {
@@ -90,16 +91,20 @@ class AccountForm extends Component {
                     justify="space-between"
                     alignItems="center"
                   >
-                    <Button
-                      type="submit"
-                      className={classes.formButton}
-                      variant="contained"
-                      size="large"
-                      color="secondary"
-                      disabled={pristine || invalid || submitting}
-                    >
-                      {formToggle ? 'Enter' : 'Create Account'}
-                    </Button>
+                    {submitting ? (
+                      <Spinner size={30} color="secondary" />
+                    ) : (
+                      <Button
+                        type="submit"
+                        className={classes.formButton}
+                        variant="contained"
+                        size="large"
+                        color="secondary"
+                        disabled={pristine || invalid || submitting}
+                      >
+                        {formToggle ? 'Enter' : 'Create Account'}
+                      </Button>
+                    )}
                     <Typography>
                       <button
                         className={classes.formToggle}
