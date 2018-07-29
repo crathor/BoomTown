@@ -1,1 +1,0 @@
-SELECT COUNT(id) FROM items WHERE id > 0;
