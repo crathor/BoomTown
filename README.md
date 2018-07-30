@@ -6,7 +6,8 @@ To get started first you must clone this repository. after cloning it please ref
 
 ## Prerequisites
 `FrontEnd`
-* [Node](https://nodejs.org/en/) - Server and package manager
+* [Node](https://nodejs.org/en/) - Runtime Server
+* [NPM](https://docs.npmjs.com/) - Package Manager
 * [React](https://reactjs.org/docs/hello-world.html) - UI design
 * [Redux](https://redux.js.org/introduction) - Data flow and state management
 * [Apollo Client](https://www.apollographql.com/docs/react/) - GraphQl API over Rest API
