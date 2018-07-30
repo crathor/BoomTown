@@ -2,11 +2,19 @@
 Project Boomtown is all about sharing. together we can share fun and interesting things to make the World a more entertaining place to live!
 
 ## Getting Started
-To get started first you must clone this repo. after cloning it please refer below to the `installation instructions`.
+To get started first you must clone this repository. after cloning it please refer below to the `installation instructions`. You will also need to refer to the `database instructions` to set up a backend for the project to run in development mode.
 
 ## Prerequisites
-You will need to have Node installed on your machine. Knowledge of React and Redux if you would like to contribute to future updates and bug fixes.
+`FrontEnd`
+* [Node](https://nodejs.org/en/) - Server and package manager
+* [React](https://reactjs.org/docs/hello-world.html) - UI design
+* [Redux](https://redux.js.org/introduction) - Data flow and state management
+* [Apollo Client](https://www.apollographql.com/docs/react/) - GraphQl API over Rest API
 
+`BackEnd`
+* [Postgresql](https://www.postgresql.org/) - Database
+* [PostgreSQL client](https://www.npmjs.com/package/pg) - Non-blocking PostgreSQL client for Node.js
+* [Apollo Server](https://www.apollographql.com/server) - A production-ready GraphQL layer over any backend
 # Installation
 
 ## Server
@@ -35,15 +43,44 @@ Commands must be run from the `client` directory:
 
 `npm run build`
 
-## Built With
-React - The Javascript library used
-Redux - Data Flow Library
-Apollo - For GraphQL server
-Node - For runtime and Express server
+# Database Setup
+The database will have to be constructed before you can launch the project. You will have to navigate to the `/server/config/application.js` and update the following fields with your database info:
+* app.set('PG_HOST', process.env.PG_HOST || 'localhost')
+* app.set('PG_USER', process.env.PG_USER || `YOUR USER NAME`)
+* app.set('PG_PASSWORD', process.env.PG_PASSWORD || `YOUR PASSWORD`)
+* app.set('PG_DB', process.env.PG_DB || `YOUR DB NAME`)
 
-## Authors
-Cody Rathor - Initial work - `RED Academy Student`
+## The database consists of `5` tables:
+* users
+    * id -- `primary key, serial`
+    * fullname -- `not null`
+    * email -- `unique, not null`
+    * bio
+    * password -- `not null`
+* items 
+    * id -- `primary key, serial`
+    * title -- `not null`
+    * description -- `not null`
+    * created -- `not null`
+    * ownerid -- `not null, foreign key = users.id`
+    * borrowerid -- `borrowerid <> ownerid, foreign key = users.id`
+* itemtags - `linked list`
+    * tagid -- `foreign key = tags.id`
+    * itemid -- `foreign key = items.id`
+* tags
+    * id -- `primary key, serial`
+    * title -- `not null, unique`
+* uploads
+    * id -- `primary key, serial`
+    * filename -- `not null`
+    * mimetype -- `not null`
+    * encoding -- `not null`
+    * data -- `not null`
+    * itemid -- `foreign key = items.id`
+    
+# Authors
+## Cody Rathor - <codyrathor@gmail.com>
 
-### Acknowledgments
+# Acknowledgments
 `Thanks RED Academy for the boilerplate!`
 
