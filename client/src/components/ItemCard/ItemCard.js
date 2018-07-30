@@ -14,10 +14,10 @@ import moment from 'moment'
 import Gravatar from 'react-gravatar'
 import ItemsContainer from '../../containers/ItemsContainer'
 import Spinner from '../Spinner'
-
+import PropTypes from 'prop-types'
 import styles from './styles'
 
-const ItemCard = ({ item, classes, hideButton, history, match }) => (
+const ItemCard = ({ item, classes, hideButton, history }) => (
   <ItemsContainer>
     {({ borrowItem, loading }) => {
       if (loading) return <Spinner size={30} color="secondary" />
@@ -74,5 +74,12 @@ const ItemCard = ({ item, classes, hideButton, history, match }) => (
     }}
   </ItemsContainer>
 )
+
+ItemCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
+  hideButton: PropTypes.bool,
+  history: PropTypes.object
+}
 
 export default withRouter(withStyles(styles)(ItemCard))

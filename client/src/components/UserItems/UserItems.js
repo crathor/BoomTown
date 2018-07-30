@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Grow } from '@material-ui/core'
-import ItemCard from '../../../components/ItemCard'
+import ItemCard from '../ItemCard'
+import PropTypes from 'prop-types'
 
 const UserItems = ({ items, match, viewer }) => {
   return items.map(item => (
@@ -15,6 +16,12 @@ const UserItems = ({ items, match, viewer }) => {
       </Grid>
     </Grow>
   ))
+}
+
+UserItems.propTypes = {
+  items: PropTypes.array.isRequired,
+  match: PropTypes.object,
+  viewer: PropTypes.object.isRequired
 }
 
 export default UserItems

@@ -11,6 +11,7 @@ import {
   Audiotrack,
   GolfCourse
 } from '@material-ui/icons'
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const CheckBoxItem = ({ tag, classes }) => {
@@ -69,6 +70,11 @@ const CheckBoxItem = ({ tag, classes }) => {
       </Field>
     </Grid>
   )
+}
+
+CheckBoxItem.propTypes = {
+  classes: PropTypes.object.isRequired,
+  tag: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(CheckBoxItem)

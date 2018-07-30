@@ -5,8 +5,8 @@ import MainGrid from '../../components/MainGrid'
 
 import styles from './styles'
 import LoadingPage from '../../components/LoadingPage'
-import UserProfile from './UserProfile'
-import UserItems from './UserItems'
+import UserProfile from '../../components/UserProfile'
+import UserItems from '../../components/UserItems'
 
 const Profile = ({ classes, match }) => (
   <ItemsContainer id={match.params.userid}>

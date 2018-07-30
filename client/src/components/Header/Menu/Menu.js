@@ -10,7 +10,7 @@ import {
 import { Fingerprint, PowerSettingsNew, MoreVert } from '@material-ui/icons'
 import { withRouter } from 'react-router-dom'
 import AuthContainer from '../../../containers/AuthContainer'
-
+import PropTypes from 'prop-types'
 import styles from './styles'
 class DropMenu extends Component {
   state = {
@@ -71,6 +71,10 @@ class DropMenu extends Component {
       </AuthContainer>
     )
   }
+}
+
+DropMenu.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default withRouter(withStyles(styles)(DropMenu))

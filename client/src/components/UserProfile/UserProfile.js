@@ -10,6 +10,7 @@ import {
 import BorrowedItems from '../BorrowedItems'
 import styles from './styles'
 import Gravatar from 'react-gravatar'
+import PropTypes from 'prop-types'
 
 const getAmountOfUserItems = arr => {
   switch (arr.length) {
@@ -64,6 +65,11 @@ const UserProfile = ({ user, classes }) => {
       </Card>
     </Grid>
   )
+}
+
+UserProfile.propTypes = {
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(UserProfile)

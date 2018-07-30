@@ -16,6 +16,7 @@ import validate from './helpers/validation'
 import logUserIn from './helpers/logUserIn'
 import signUpUser from './helpers/signUpUser'
 import Spinner from '../Spinner'
+import PropTypes from 'prop-types'
 
 class AccountForm extends Component {
   state = {
@@ -140,4 +141,7 @@ class AccountForm extends Component {
   }
 }
 
+AccountForm.propTypes = {
+  classes: PropTypes.object.isRequired
+}
 export default withStyles(styles)(AccountForm)

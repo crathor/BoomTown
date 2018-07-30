@@ -7,6 +7,7 @@ import {
   withStyles,
   Avatar
 } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
 import styles from './styles'
 
@@ -29,6 +30,11 @@ const BorrowedItems = ({ items, classes }) => {
       </List>
     </Fragment>
   )
+}
+
+BorrowedItems.propTypes = {
+  items: PropTypes.array.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(BorrowedItems)

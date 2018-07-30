@@ -2,6 +2,7 @@ import React from 'react'
 import ItemCard from '../ItemCard'
 import { connect } from 'react-redux'
 import { ViewerContext } from '../../context/ViewerProvider'
+import PropTypes from 'prop-types'
 
 const ShareItemPreview = ({ item }) => (
   <ViewerContext.Consumer>
@@ -20,6 +21,10 @@ const ShareItemPreview = ({ item }) => (
     }}
   </ViewerContext.Consumer>
 )
+
+ShareItemPreview.propTypes = {
+  item: PropTypes.object.isRequired
+}
 
 const mapStateToProps = state => {
   return {

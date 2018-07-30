@@ -18,6 +18,7 @@ import { maxCharLength } from './helpers/charLength'
 import { connect } from 'react-redux'
 import { updateForm, resetImage, resetForm } from '../../redux/actions'
 import Spinner from '../Spinner'
+import PropTypes from 'prop-types'
 
 class ShareForm extends Component {
   constructor(props) {
@@ -209,6 +210,13 @@ class ShareForm extends Component {
       </ItemsContainer>
     )
   }
+}
+
+ShareForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  resetForm: PropTypes.func.isRequired,
+  updateForm: PropTypes.func.isRequired,
+  resetImage: PropTypes.func.isRequired
 }
 
 export default connect(

@@ -17,17 +17,18 @@ const client = new ApolloClient({
     onError(({ graphQLErrors, networkError }) => {
       // Log better error messages to console
       if (graphQLErrors) {
-        graphQLErrors.map(({ message, locations, path }) =>
-          console.log(
+        graphQLErrors.map(
+          ({ message, locations, path }) =>
             `[GraphQL error]: Message: ${message}, Location: ${JSON.stringify(
               locations,
               0,
               2
             )}, Path: ${path}`
-          )
         )
       }
-      if (networkError) console.log(`[Network error]: ${networkError}`)
+      if (networkError) {
+        return `[Network error]: ${networkError}`
+      }
     }),
     httpWithUploadsLink
   ]),
