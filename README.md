@@ -84,3 +84,12 @@ The database will have to be constructed before you can launch the project. You 
 # Acknowledgments
 `Thanks RED Academy for the boilerplate!`
 
+# Project Photos
+## Landing Page:
+![Landing Page](/screenshots/Login.png?raw=true)
+## Items Page:
+![Items Page](/screenshots/Items.png?raw=true)
+## Share Page:
+![Share Page](/screenshots/Share.png?raw=true)
+## Profile Page:
+![Profile Page](/screenshots/Profile.png?raw=true)
