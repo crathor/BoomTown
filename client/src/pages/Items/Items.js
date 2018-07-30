@@ -5,6 +5,7 @@ import ItemsContainer from '../../containers/ItemsContainer'
 import MainGrid from '../../components/MainGrid'
 import styles from './styles'
 import LoadingPage from '../../components/LoadingPage'
+import PropTypes from 'prop-types'
 
 const Items = ({ classes }) => (
   <ItemsContainer>
@@ -29,5 +30,9 @@ const Items = ({ classes }) => (
     }}
   </ItemsContainer>
 )
+
+Items.propTypes = {
+  classes: PropTypes.object.isRequired
+}
 
 export default withStyles(styles)(Items)

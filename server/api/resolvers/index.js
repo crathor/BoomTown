@@ -120,6 +120,17 @@ module.exports = function(app) {
         } catch (e) {
           throw new ApolloError(e)
         }
+      },
+      async returnItem(parent, args, { token, pgResource }, info) {
+        try {
+          const itemid = args.item
+          const updatedItem = await pgResource.returnItem({
+            itemid
+          })
+          return updatedItem
+        } catch (e) {
+          throw new ApolloError(e)
+        }
       }
     }
   }

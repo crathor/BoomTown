@@ -29,7 +29,7 @@ const getAmountOfBorrowedUserItems = arr => {
   }
 }
 
-const UserProfile = ({ user, classes }) => {
+const UserProfile = ({ user, classes, viewer, match, returnItem }) => {
   const amountOfUserItems = getAmountOfUserItems(user.items)
   const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(user.borrowed)
   return (
@@ -60,7 +60,14 @@ const UserProfile = ({ user, classes }) => {
           <Typography variant="subheading" gutterBottom>
             "{user.bio}"
           </Typography>
-          {user.borrowed.length > 0 && <BorrowedItems items={user.borrowed} />}
+          {user.borrowed.length > 0 && (
+            <BorrowedItems
+              items={user.borrowed}
+              viewer={viewer}
+              match={match}
+              returnItem={returnItem}
+            />
+          )}
         </CardContent>
       </Card>
     </Grid>
@@ -69,7 +76,10 @@ const UserProfile = ({ user, classes }) => {
 
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  viewer: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  returnItem: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(UserProfile)

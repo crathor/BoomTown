@@ -4,7 +4,7 @@ import React from 'react'
 import Typography from '@material-ui/core/Typography'
 
 import AccountForm from '../../components/AccountForm'
-
+import PropTypes from 'prop-types'
 import styles from './styles'
 
 const Home = ({ classes }) => (
@@ -31,4 +31,9 @@ const Home = ({ classes }) => (
     </Grid>
   </Grid>
 )
+
+Home.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
 export default withStyles(styles)(Home)

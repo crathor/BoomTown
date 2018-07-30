@@ -238,6 +238,17 @@ module.exports = function(postgres) {
       } catch (error) {
         throw 'No Item Found'
       }
+    },
+    async returnItem({ itemid }) {
+      try {
+        const item = await postgres.query({
+          text: `UPDATE items SET borrowerid=NULL WHERE id=$1 RETURNING *`,
+          values: [itemid]
+        })
+        return item.rows
+      } catch (error) {
+        throw 'No Item Found'
+      }
     }
   }
 }

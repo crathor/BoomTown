@@ -8,7 +8,8 @@ import {
   ALL_ITEMS_QUERY,
   ALL_USER_ITEMS_QUERY,
   ADD_ITEM_MUTATION,
-  BORROW_ITEM_MUTATION
+  BORROW_ITEM_MUTATION,
+  RETURN_ITEM_MUTATION
 } from '../apollo/queries'
 
 const itemsData = ({ render }) => {
@@ -106,12 +107,36 @@ const borrowItem = ({ render }) => {
     </ViewerContext.Consumer>
   )
 }
+const returnItem = ({ render }) => {
+  return (
+    <ViewerContext.Consumer>
+      {({ loading, viewer, error }) => {
+        if (loading) return '...loading'
+        return (
+          <Mutation
+            variables={{ user: { ...viewer } }}
+            mutation={RETURN_ITEM_MUTATION}
+            refetchQueries={result => [
+              { query: ALL_ITEMS_QUERY, variables: { filter: viewer.id } },
+              { query: ALL_USER_ITEMS_QUERY, variables: { id: viewer.id } }
+            ]}
+          >
+            {(mutation, { data, error, loading }) =>
+              render({ mutation, data, error, loading })
+            }
+          </Mutation>
+        )
+      }}
+    </ViewerContext.Consumer>
+  )
+}
 const ItemsContainer = adopt({
   tagData,
   itemsData,
   userItemsData,
   addItem,
-  borrowItem
+  borrowItem,
+  returnItem
 })
 
 export default ItemsContainer

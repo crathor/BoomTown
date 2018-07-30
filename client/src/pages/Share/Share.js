@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './styles'
 import ShareForm from '../../components/ShareItemForm'
 import ShareItemPreview from '../../components/ShareItemPreview'
+import PropTypes from 'prop-types'
 
 const Share = ({ classes }) => {
   return (
@@ -23,6 +24,10 @@ const Share = ({ classes }) => {
       </Grid>
     </Grid>
   )
+}
+
+Share.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Share)

@@ -87,6 +87,12 @@ export const BORROW_ITEM_MUTATION = gql`
   }
 `
 
+export const RETURN_ITEM_MUTATION = gql`
+  mutation returnItem($item: ID!) {
+    returnItem(item: $item)
+  }
+`
+
 /**
  * Auth-related queries and mutations.
  */
