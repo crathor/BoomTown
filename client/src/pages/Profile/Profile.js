@@ -15,12 +15,7 @@ const Profile = ({ classes, match }) => (
       if (loading) return <LoadingPage />
       return (
         <MainGrid>
-          <UserProfile
-            user={user}
-            match={match}
-            viewer={viewer}
-            returnItem={returnItem}
-          />
+          <UserProfile user={user} returnItem={returnItem} />
           {user.items.length > 0 && (
             <Grid item xs={12} className={classes.shared}>
               <Typography variant="display1" color="primary">

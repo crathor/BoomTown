@@ -29,7 +29,7 @@ const getAmountOfBorrowedUserItems = arr => {
   }
 }
 
-const UserProfile = ({ user, classes, viewer, match, returnItem }) => {
+const UserProfile = ({ user, classes, returnItem }) => {
   const amountOfUserItems = getAmountOfUserItems(user.items)
   const amountOfUserBorrowedItems = getAmountOfBorrowedUserItems(user.borrowed)
   return (
@@ -61,12 +61,7 @@ const UserProfile = ({ user, classes, viewer, match, returnItem }) => {
             "{user.bio}"
           </Typography>
           {user.borrowed.length > 0 && (
-            <BorrowedItems
-              items={user.borrowed}
-              viewer={viewer}
-              match={match}
-              returnItem={returnItem}
-            />
+            <BorrowedItems items={user.borrowed} returnItem={returnItem} />
           )}
         </CardContent>
       </Card>
@@ -77,8 +72,6 @@ const UserProfile = ({ user, classes, viewer, match, returnItem }) => {
 UserProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  viewer: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   returnItem: PropTypes.object.isRequired
 }
 

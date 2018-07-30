@@ -26,13 +26,11 @@ const Header = ({ classes, location }) => {
           aria-label="Menu"
           to="/items"
           component={Link}
-          onClick={this.showShareButton}
         >
           <img src={BoomTownLogo} alt="BoomTown" className={classes.logo} />
         </IconButton>
         <Slide in={location.pathname !== '/share'} direction="left">
           <Button
-            onClick={this.hideShareButton}
             component={Link}
             to="/share"
             variant="extendedFab"
@@ -44,12 +42,7 @@ const Header = ({ classes, location }) => {
           </Button>
         </Slide>
         <ViewerContext.Consumer>
-          {({ viewer }) => (
-            <Menu
-              showShareButton={this.showShareButton}
-              currentViewer={viewer.id}
-            />
-          )}
+          {({ viewer }) => <Menu currentViewer={viewer.id} />}
         </ViewerContext.Consumer>
       </Toolbar>
     </AppBar>
